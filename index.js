@@ -3,11 +3,11 @@ var Service, Characteristic;
 module.exports = function(homebridge) {
   Service = homebridge.hap.Service;
   Characteristic = homebridge.hap.Characteristic;
-  homebridge.registerAccessory("homebridge-harmony-tv", "Harmony TV", HarmonyTV);
+  homebridge.registerAccessory("homebridge-harmony-tv", "HarmonyTV", HarmonyTV);
 };
 
 
-function HttpSprinkler(log, config) {
+function HarmonyTV(log, config) {
   this.log = log;
 	
   this.name = config.name || "Harmony TV";
