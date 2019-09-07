@@ -20,6 +20,16 @@ function HarmonyTV(log, config) {
 
 HarmonyTV.prototype = {
 	
+  getPowerState: function(callback)
+  {
+
+  }
+	
+  setPowerState: function(callback)
+  {
+
+  }
+	
   getServices: function()
   {
 		
@@ -29,7 +39,7 @@ HarmonyTV.prototype = {
       .setCharacteristic(Characteristic.Model, this.model)
       .setCharacteristic(Characteristic.SerialNumber, this.serial);
 		
-    this.tvService = new Service.Television(this.name, 'tvService');
+    this.tvService = new Service.Television(this.name);
 	
     this.tvService
       .setCharacteristic(Characteristic.ConfiguredName, this.name)
