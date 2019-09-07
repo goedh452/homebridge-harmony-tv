@@ -18,10 +18,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/merdok/homebridge-harmony-tv.git"
+    "url": "https://github.com/goedh452/homebridge-harmony-tv.git"
   },
   "bugs": {
-    "url": "https://github.com/merdok/homebridge-harmony-tv/issues"
+    "url": "https://github.com/goedh452/homebridge-harmony-tv/issues"
   },
-  "homepage": "https://github.com/merdok/homebridge-harmony-tv#readme"
+  "homepage": "https://github.com/goedh452/homebridge-harmony-tv#readme"
 }
