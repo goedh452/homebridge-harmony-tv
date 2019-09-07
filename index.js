@@ -18,7 +18,7 @@ function HttpSprinkler(log, config) {
 }
 
 
-HarmonyTV.prototype {
+HarmonyTV.prototype = {
 	
   getServices: function()
   {
