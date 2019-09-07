@@ -1,7 +1,7 @@
 {
-  "name": "homebridge-webos-tv",
+  "name": "homebridge-harmony-tv",
   "version": "1.6.2",
-  "description": "Homebridge plugin for LG webOS TVs",
+  "description": "Homebridge plugin for Harmony activities",
   "main": "index.js",
   "engines": {
     "node": ">=4.3.2",
@@ -9,29 +9,19 @@
   },
   "keywords": [
     "homebridge-plugin",
-    "webos2",
-    "webos3",
-    "webos4",
-    "lgtv",
     "homebridge",
-    "webos",
     "homekit"
   ],
-  "author": "merdok",
+  "author": "goedh452",
   "license": "MIT",
   "dependencies": {
-    "lgtv2": "^1.4.1",
-    "wake_on_lan": "^0.0.4",
-    "tcp-ping": "^0.1.1",
-    "mkdirp": "^0.5.1",
-    "persist-path": "^1.0.2"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/merdok/homebridge-webos-tv.git"
+    "url": "https://github.com/merdok/homebridge-harmony-tv.git"
   },
   "bugs": {
-    "url": "https://github.com/merdok/homebridge-webos-tv/issues"
+    "url": "https://github.com/merdok/homebridge-harmony-tv/issues"
   },
-  "homepage": "https://github.com/merdok/homebridge-webos-tv#readme"
+  "homepage": "https://github.com/merdok/homebridge-harmony-tv#readme"
 }
