@@ -22,7 +22,7 @@ sudo npm install -g homebridge
 
 Install homebridge-webos-tv:
 ```sh
-sudo npm install -g homebridge-webos-tv
+sudo npm install -g homebridge-harmony-tv
 ```
 
 ## Configuration
