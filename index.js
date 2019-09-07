@@ -23,12 +23,12 @@ HarmonyTV.prototype = {
   getPowerState: function(callback)
   {
 
-  }
+  },
 	
   setPowerState: function(callback)
   {
 
-  }
+  },
 	
   getServices: function()
   {
