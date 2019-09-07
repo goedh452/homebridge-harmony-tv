@@ -15,12 +15,21 @@ To use the plugin iOS 12.2 or higher is required.
 
 ## Installation
 
-Install homebridge:
-```sh
-sudo npm install -g homebridge
-```
+For this plugin to work, enable XMPP for the Harmony hub and install the Harmony API:
 
-Install homebridge-webos-tv:
+### XMPP:
+* Open the Harmony app
+* Go to Harmony setup
+* Add/change devices and activities
+* Remote and Hub
+* Enable XMPP
+* Confirm twice
+
+### Install Harmony API
+
+See https://github.com/maddox/harmony-api for installation instructions. Make sure it is running as a service.
+
+### Install homebridge-harmony-tv:
 ```sh
 sudo npm install -g homebridge-harmony-tv
 ```
