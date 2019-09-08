@@ -1,6 +1,3 @@
-# WORK IN PROGRES!!! Do not use.
-
-
 # homebridge-harmony-tv
 
 `hombridge-harmony-tv` is a plugin for Homebridge which allows you to control your activities from your Harmony remote. It creates a homekit television with inputs that represent the activities.
@@ -17,7 +14,7 @@ To use the plugin iOS 12.2 or higher is required.
 
 For this plugin to work, enable XMPP for the Harmony hub and install the Harmony API:
 
-### XMPP:
+### Enable XMPP:
 * Open the Harmony app
 * Go to Harmony setup
 * Add/change devices and activities
@@ -36,4 +33,4 @@ sudo npm install -g homebridge-harmony-tv
 
 ## Configuration
 
-Add the accessory in `config.json` in your home directory inside `.homebridge`.
+Add the accessory in `config.json`.
