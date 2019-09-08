@@ -15,7 +15,8 @@
   "author": "goedh452",
   "license": "MIT",
   "dependencies": {
-    "polling-to-event": ">=2.1.0"
+    "polling-to-event": ">=2.1.0",
+    "request": "^2.67.0"
   },
   "repository": {
     "type": "git",
