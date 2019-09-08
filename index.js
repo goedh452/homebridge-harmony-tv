@@ -1,12 +1,12 @@
 var Service, Characteristic;
 var request = require("request");
 
-let baseURL;
-let activitiesURL;
-let jsonHub;
-let jsonAct;
-let harmonyHubs;
-let harmonyActs;
+var baseURL;
+var activitiesURL;
+var jsonHub;
+var jsonAct;
+var harmonyHubs;
+var harmonyActs;
 
 module.exports = function(homebridge) {
   Service = homebridge.hap.Service;
@@ -34,9 +34,9 @@ function HarmonyTV(log, config)
 
 
   // Get Harmony Hubs
-  this.baseURL = "http://" + this.ApiIP + ":" + this.ApiPort + "/hubs";
+  baseURL = "http://" + this.ApiIP + ":" + this.ApiPort + "/hubs";
 
-  this.httpRequest(this.baseURL, "", "GET", function(error, response, responseBody)
+  this.httpRequest(baseURL, "", "GET", function(error, response, responseBody)
   {
     if (error)
     {
@@ -44,16 +44,16 @@ function HarmonyTV(log, config)
     }
     else
     {
-      this.jsonHub = JSON.parse(responseBody);
-      this.log("HUB responsebody: " + this.jsonHub);
+      jsonHub = JSON.parse(responseBody);
+      this.log("HUB responsebody: " + jsonHub);
 
-      this.harmonyHubs = jsonHub[0].hubs;
-      this.log("HUB received: " + this.harmonyHubs);
+      harmonyHubs = jsonHub[0].hubs;
+      this.log("HUB received: " + harmonyHubs);
     }
   }.bind(this));
 
   // Get hub activities
-  this.activitiesURL = this.baseURL + "/" + this.harmonyHubs + "/activities";
+  activitiesURL = baseURL + "/" + harmonyHubs + "/activities";
 
   this.httpRequest(activitiesURL, "", "GET", function(error, response, responseBody)
   {
@@ -65,10 +65,10 @@ function HarmonyTV(log, config)
     else
     {
       jsonAct = JSON.parse(responseBody);
-      this.log("Activity responsebody: " + this.jsonAct);
+      this.log("Activity responsebody: " + jsonAct);
 
-      this.harmonyActs = jsonAct[0].slug;
-      this.log("Activities received: " + this.harmonyActs);
+      harmonyActs = jsonAct[0].slug;
+      this.log("Activities received: " + harmonyActs);
     }
   }.bind(this));
 }
