@@ -31,7 +31,7 @@ function HarmonyTV(log, config)
   {
     if (error)
     {
-      this.log('HTTP get hubs function failed: %s', error.message);
+      this.log('Get hub failed: %s', error.message);
       callback(error);
     }
     else
@@ -39,7 +39,7 @@ function HarmonyTV(log, config)
       var jsonHub = JSON.parse(responseBody);
       var hub  = jsonHub[0].hubs;
 
-      this.log("JSON responsebody: " + jsonHub);
+      this.log("HUB responsebody: " + jsonHub);
       this.log("HUB received: " + hub);
     }
   }.bind(this));
@@ -51,7 +51,7 @@ function HarmonyTV(log, config)
   {
     if (error)
     {
-      this.log('HTTP get activities function failed: %s', error.message);
+      this.log('Get activities failed: %s', error.message);
       callback(error);
     }
     else
@@ -59,7 +59,7 @@ function HarmonyTV(log, config)
       var jsonAct     = JSON.parse(responseBody);
       var activities  = jsonAct[0].slug;
 
-      this.log("JSON responsebody: " + jsonAct);
+      this.log("Activity responsebody: " + jsonAct);
       this.log("Activities received: " + activities);
     }
   }.bind(this));
