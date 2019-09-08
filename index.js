@@ -18,6 +18,8 @@ function HarmonyTV(log, config)
   this.ApiIP = config.ApiIP               || "192.168.1.117";
   this.ApiPort = config.ApiPort           || 8282;
 
+  this.timeout = config.timeout           || 5000;
+
   // Manufacturer information
   this.manufacturer = config.manufacturer || "goedh452";
   this.model = config.model               || "Harmony TV";
@@ -67,6 +69,27 @@ function HarmonyTV(log, config)
 
 
 HarmonyTV.prototype = {
+
+  httpRequest: function(url, body, method, callback)
+  {
+    var callbackMethod = callback;
+
+    request({
+        url: url,
+        body: body,
+        method: method,
+        timeout: this.timeout,
+        rejectUnauthorized: false
+      },
+      function(error, response, responseBody)
+      {
+        if (callbackMethod)
+        {
+          callbackMethod(error, response, responseBody);
+        }
+
+      })
+  },
 
   getPowerState: function(callback)
   {
