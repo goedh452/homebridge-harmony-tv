@@ -45,7 +45,7 @@ function HarmonyTV(log, config)
     else
     {
       jsonHub = JSON.parse(responseBody);
-      this.log("HUB responsebody: " + jsonHub);
+      this.log("HUB responsebody: " + responseBody);
 
       harmonyHubs = jsonHub[0].hubs;
       this.log("HUB received: " + harmonyHubs);
