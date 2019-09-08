@@ -1,4 +1,4 @@
-# WORK IN PROGRES!!!
+# WORK IN PROGRES!!! Do not use.
 
 
 # homebridge-harmony-tv
