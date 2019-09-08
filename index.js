@@ -1,6 +1,13 @@
 var Service, Characteristic;
 var request = require("request");
 
+let baseURL;
+let activitiesURL;
+let jsonHub;
+let jsonAct;
+let harmonyHubs;
+let harmonyActs;
+
 module.exports = function(homebridge) {
   Service = homebridge.hap.Service;
   Characteristic = homebridge.hap.Characteristic;
@@ -27,7 +34,7 @@ function HarmonyTV(log, config)
 
 
   // Get Harmony Hubs
-  var baseURL = "http://" + this.ApiIP + ":" + this.ApiPort + "/hubs";
+  this.baseURL = "http://" + this.ApiIP + ":" + this.ApiPort + "/hubs";
 
   this.httpRequest(baseURL, "", "GET", function(error, response, responseBody)
   {
@@ -38,16 +45,16 @@ function HarmonyTV(log, config)
     }
     else
     {
-      var jsonHub = JSON.parse(responseBody);
-      this.log("HUB responsebody: " + jsonHub);
+      this.jsonHub = JSON.parse(responseBody);
+      this.log("HUB responsebody: " + this.jsonHub);
 
-      var hub = jsonHub[0].hubs;
-      this.log("HUB received: " + hub);
+      this.harmonyHubs = jsonHub[0].hubs;
+      this.log("HUB received: " + this.harmonyHubs);
     }
   }.bind(this));
 
   // Get hub activities
-  var activitiesURL = baseURL + "/" + hub + "/activities";
+  this.activitiesURL = this.baseURL + "/" + hub + "/activities";
 
   this.httpRequest(activitiesURL, "", "GET", function(error, response, responseBody)
   {
@@ -58,11 +65,11 @@ function HarmonyTV(log, config)
     }
     else
     {
-      var jsonAct     = JSON.parse(responseBody);
-      var activities  = jsonAct[0].slug;
+      jsonAct = JSON.parse(responseBody);
+      this.log("Activity responsebody: " + this.jsonAct);
 
-      this.log("Activity responsebody: " + jsonAct);
-      this.log("Activities received: " + activities);
+      this.harmonyActs = jsonAct[0].slug;
+      this.log("Activities received: " + this.harmonyActs);
     }
   }.bind(this));
 }
