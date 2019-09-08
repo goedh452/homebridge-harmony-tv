@@ -48,6 +48,8 @@ function HarmonyTV(log, config)
       harmonyHubs = jsonHub.hubs[0];
       this.log("HUB received: " + harmonyHubs);
     }
+
+    callback();
   }.bind(this));
 
   // Get hub activities
