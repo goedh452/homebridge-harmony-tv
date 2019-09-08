@@ -53,7 +53,7 @@ function HarmonyTV(log, config)
   }.bind(this));
 
   // Get hub activities
-  this.activitiesURL = this.baseURL + "/" + hub + "/activities";
+  this.activitiesURL = this.baseURL + "/" + this.harmonyHubs + "/activities";
 
   this.httpRequest(activitiesURL, "", "GET", function(error, response, responseBody)
   {
