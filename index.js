@@ -29,8 +29,6 @@ function HarmonyTV(log, config)
   // Get Harmony Hubs
   var baseURL = "http://" + this.ApiIP + ":" + this.ApiPort + "/hubs";
 
-  this.log("BaseURL: " + baseURL);
-
   this.httpRequest(baseURL, "", "GET", function(error, response, responseBody)
   {
     if (error)
@@ -41,9 +39,9 @@ function HarmonyTV(log, config)
     else
     {
       var jsonHub = JSON.parse(responseBody);
-      var hub  = jsonHub[0].hubs;
-
       this.log("HUB responsebody: " + jsonHub);
+
+      var hub = jsonHub[0].hubs;
       this.log("HUB received: " + hub);
     }
   }.bind(this));
