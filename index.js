@@ -36,12 +36,11 @@ function HarmonyTV(log, config)
   // Get Harmony Hubs
   this.baseURL = "http://" + this.ApiIP + ":" + this.ApiPort + "/hubs";
 
-  this.httpRequest(baseURL, "", "GET", function(error, response, responseBody)
+  this.httpRequest(this.baseURL, "", "GET", function(error, response, responseBody)
   {
     if (error)
     {
       this.log('Get hub failed: %s', error.message);
-      callback(error);
     }
     else
     {
