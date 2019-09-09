@@ -31,7 +31,7 @@ function HarmonyTV(log, config)
   this.manufacturer = config.manufacturer      || "goedh452";
   this.model        = config.model             || "Harmony TV";
   this.serial       = config.serial            || "Harmony TV";
-  this.firmware     = "0.0.1"
+  this.firmware     = "0.0.1";
 
 
   // Get Harmony Hubs
