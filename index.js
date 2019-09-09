@@ -117,7 +117,7 @@ HarmonyTV.prototype = {
     this.informationService
       .setCharacteristic(Characteristic.Manufacturer, this.manufacturer)
       .setCharacteristic(Characteristic.Model, this.model)
-      .setCharacteristic(Characteristic.SerialNumber, this.serial);
+      .setCharacteristic(Characteristic.SerialNumber, this.serial)
       .setCharacteristic(Characteristic.Firmware, this.firmware);
 
     this.tvService = new Service.Television(this.name);
