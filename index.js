@@ -19,18 +19,19 @@ function HarmonyTV(log, config)
 {
   this.log = log;
 
-  this.name = config.name                 || "Harmony TV";
+  this.name         = config.name              || "Harmony TV";
 
   // Harmony API settings
-  this.ApiIP = config.ApiIP               || "192.168.1.117";
-  this.ApiPort = config.ApiPort           || 8282;
+  this.ApiIP        = config.ApiIP             || "192.168.1.117";
+  this.ApiPort      = config.ApiPort           || 8282;
 
-  this.timeout = config.timeout           || 5000;
+  this.timeout      = config.timeout           || 5000;
 
   // Manufacturer information
-  this.manufacturer = config.manufacturer || "goedh452";
-  this.model = config.model               || "Harmony TV";
-  this.serial = config.serial             || "Harmony TV";
+  this.manufacturer = config.manufacturer      || "goedh452";
+  this.model        = config.model             || "Harmony TV";
+  this.serial       = config.serial            || "Harmony TV";
+  this.firmware     = "0.0.1"
 
 
   // Get Harmony Hubs
@@ -41,14 +42,15 @@ function HarmonyTV(log, config)
     if (error)
     {
       this.log('Get hub failed: %s', error.message);
+      callback(error);
     }
     else
     {
       jsonHub = JSON.parse(responseBody);
       harmonyHubs = jsonHub.hubs[0];
       this.log("HUB received: " + harmonyHubs);
+      callback(null);
     }
-    callback();
   }.bind(this));
 
   // Get hub activities
@@ -60,6 +62,7 @@ function HarmonyTV(log, config)
     if (error)
     {
       this.log('Get activities failed: %s', error.message);
+      callback(error);
     }
     else
     {
@@ -68,6 +71,7 @@ function HarmonyTV(log, config)
 
       harmonyActs = jsonAct.activities[0].slug;
       this.log("Activities received: " + harmonyActs);
+      callback(null);
     }
   }.bind(this));
 }
@@ -114,6 +118,7 @@ HarmonyTV.prototype = {
       .setCharacteristic(Characteristic.Manufacturer, this.manufacturer)
       .setCharacteristic(Characteristic.Model, this.model)
       .setCharacteristic(Characteristic.SerialNumber, this.serial);
+      .setCharacteristic(Characteristic.Firmware, this.firmware);
 
     this.tvService = new Service.Television(this.name);
 
