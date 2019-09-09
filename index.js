@@ -48,8 +48,8 @@ function HarmonyTV(log, config)
     {
       jsonHub = JSON.parse(responseBody);
       harmonyHubs = jsonHub.hubs[0];
-      this.log("HUB received: " + harmonyHubs);
-      callback(null);
+      this.log("HUB found: " + harmonyHubs);
+      callback();
     }
   }.bind(this));
 
@@ -71,7 +71,7 @@ function HarmonyTV(log, config)
 
       harmonyActs = jsonAct.activities[0].slug;
       this.log("Activities received: " + harmonyActs);
-      callback(null);
+      callback();
     }
   }.bind(this));
 }
