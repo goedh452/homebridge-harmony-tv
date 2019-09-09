@@ -51,6 +51,7 @@ function HarmonyTV(log, config)
       this.log("HUB found: " + harmonyHubs);
       callback();
     }
+    callback();
   }.bind(this));
 
   // Get hub activities
@@ -73,6 +74,7 @@ function HarmonyTV(log, config)
       this.log("Activities received: " + harmonyActs);
       callback();
     }
+    callback();
   }.bind(this));
 }
 
