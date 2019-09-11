@@ -77,9 +77,9 @@ function HarmonyTV(log, config)
             activityArray.push(jsonAct.activities[key].slug);
           }
         }
+        callback(activityArray);
       }.bind(this));
     }
-    callback();
   }.bind(this));
 
   // Status Polling
