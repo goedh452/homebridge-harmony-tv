@@ -98,11 +98,11 @@ function HarmonyTV(log, config)
           }
           else
           { done(null, body); }
-        })
+        }.bind(this))
       }, {
         interval: this.pollingInterval,
         eventName: "statuspoll"
-      }.bind(this));
+      });
 
       statusemitter.on("statuspoll", function(responseBody)
       {
