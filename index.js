@@ -108,7 +108,7 @@ HarmonyTV.prototype = {
         jsonHub = JSON.parse(hubBody);
         harmonyHubs = jsonHub.hubs[0];
         this.log("HarmonyTV: HUB found: " + harmonyHubs);
-        callback(harmonyHubs);
+        callback(null, harmonyHubs);
       }
     }.bind(this));
 
@@ -135,7 +135,7 @@ HarmonyTV.prototype = {
         {
           this.log("HarmonyTV: Activity found: " + jsonAct.activities[key].slug);
           activityArray.push(jsonAct.activities[key].slug);
-          callback(activityArray);
+          callback(null, activityArray);
         }
       }
     }.bind(this));
