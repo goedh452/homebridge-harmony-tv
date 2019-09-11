@@ -106,7 +106,7 @@ HarmonyTV.prototype = {
   getPowerState: function(callback)
   {
     // Get current status
-    statusURL = "http://" + this.ApiIP + ":" + this.ApiPort + harmonyHubs + "/status";
+    statusURL = baseURL + "/" + harmonyHubs + "/status";
 
     this.httpRequest(statusURL, "", "GET", function(error, response, responseBody)
     {
