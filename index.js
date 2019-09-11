@@ -126,7 +126,6 @@ HarmonyTV.prototype = {
         else
         { powerOn = true; }
 
-        }
         callback(null, powerOn);
       }
     }.bind(this));
