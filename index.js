@@ -102,7 +102,7 @@ function HarmonyTV(log, config)
       }, {
         interval: this.pollingInterval,
         eventName: "statuspoll"
-      });
+      }.bind(this));
 
       statusemitter.on("statuspoll", function(responseBody)
       {
@@ -114,6 +114,8 @@ function HarmonyTV(log, config)
         { powerOn = false; }
         else
         { powerOn = true; }
+
+        this.log("HarmonyTV: State si currently: " + powerOn);
 
         this.tvService.getCharacteristic(Characteristic.Active).updateValue(powerOn);
       });
