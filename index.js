@@ -41,46 +41,7 @@ function HarmonyTV(log, config)
 
   var that = this;
 
-  // Get Harmony Hubs
-  baseURL = "http://" + this.apiIP + ":" + this.apiPort + "/hubs";
-
-  this.httpRequest(baseURL, "", "GET", function(error, response, responseBody)
-  {
-    if (error)
-    {
-      this.log('Get hub failed: %s', error.message);
-      callback(error);
-    }
-    else
-    {
-      jsonHub = JSON.parse(responseBody);
-      harmonyHubs = jsonHub.hubs[0];
-      this.log("HarmonyTV: HUB found: " + harmonyHubs);
-
-      // Get hub activities
-      activitiesURL = baseURL + "/" + harmonyHubs + "/activities";
-
-      this.httpRequest(activitiesURL, "", "GET", function(error, response, responseBody)
-      {
-        if (error)
-        {
-          this.log('Get activities failed: %s', error.message);
-          callback(error);
-        }
-        else
-        {
-          jsonAct = JSON.parse(responseBody);
-
-          for (var key = 0; key < jsonAct.activities.length; key++)
-          {
-            this.log("HarmonyTV: Activity found: " + jsonAct.activities[key].slug);
-            activityArray.push(jsonAct.activities[key].slug);
-          }
-        }
-        callback(activityArray);
-      }.bind(this));
-    }
-  }.bind(this));
+  this.getHubs();
 
   // Status Polling
   if (that.apiIP && that.apiPort)
@@ -130,6 +91,50 @@ function HarmonyTV(log, config)
 
 
 HarmonyTV.prototype = {
+
+  getHubs: function()
+  {
+    // Get Harmony Hubs
+    baseURL = "http://" + this.apiIP + ":" + this.apiPort + "/hubs";
+
+    this.httpRequest(baseURL, "", "GET", function(error, response, responseBody)
+    {
+      if (error)
+      {
+        this.log('Get hub failed: %s', error.message);
+        callback(error);
+      }
+      else
+      {
+        jsonHub = JSON.parse(responseBody);
+        harmonyHubs = jsonHub.hubs[0];
+        this.log("HarmonyTV: HUB found: " + harmonyHubs);
+
+        // Get hub activities
+        activitiesURL = baseURL + "/" + harmonyHubs + "/activities";
+
+        this.httpRequest(activitiesURL, "", "GET", function(error, response, responseBody)
+        {
+          if (error)
+          {
+            this.log('Get activities failed: %s', error.message);
+            callback(error);
+          }
+          else
+          {
+            jsonAct = JSON.parse(responseBody);
+
+            for (var key = 0; key < jsonAct.activities.length; key++)
+            {
+              this.log("HarmonyTV: Activity found: " + jsonAct.activities[key].slug);
+              activityArray.push(jsonAct.activities[key].slug);
+            }
+          }
+        }.bind(this));
+      }
+    }.bind(this));
+
+  },
 
   httpRequest: function(url, body, method, callback)
   {
