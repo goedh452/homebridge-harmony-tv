@@ -49,7 +49,7 @@ function HarmonyTV(log, config)
     {
       jsonHub = JSON.parse(responseBody);
       harmonyHubs = jsonHub.hubs[0];
-      this.log("HUB found: " + harmonyHubs);
+      this.log("HarmonyTV: HUB found: " + harmonyHubs);
 
       // Get hub activities
       activitiesURL = baseURL + "/" + harmonyHubs + "/activities";
@@ -65,10 +65,10 @@ function HarmonyTV(log, config)
         {
           jsonAct = JSON.parse(responseBody);
 
-          for (var key = 0; jsonAct.activities !== undefined; key++)
+          jsonAct.forEach(function(activities)
           {
-            this.log("Activity found: " + jsonAct.activities[key].slug);
-          }
+            this.log("HarmonyTV: Activity found: " + jsonAct.activities[key].slug);
+          });
 
           //harmonyActs = jsonAct.activities[0].slug;
 
