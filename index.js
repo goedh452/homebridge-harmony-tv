@@ -65,16 +65,11 @@ function HarmonyTV(log, config)
         {
           jsonAct = JSON.parse(responseBody);
 
-          this.log("LENGTH: " + jsonAct.activities.length);
-
           for (var key = 0; key < jsonAct.activities.length; key++)
           {
-            this.log("KEY: " + key);
             this.log("HarmonyTV: Activity found: " + jsonAct.activities[key].slug);
+            activityArray.push(jsonAct.activities[key].slug);
           }
-
-          //harmonyActs = jsonAct.activities[0].slug;
-
         }
       }.bind(this));
     }
