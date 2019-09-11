@@ -85,6 +85,7 @@ function HarmonyTV(log, config)
   if (that.apiIP && that.apiPort)
   {
     statusURL = baseURL + "/" + harmonyHubs + "/status";
+    that.log("statusURL: " + statusURL)
     var statusemitter = pollingtoevent(function(done)
     {
       that.httpRequest(statusURL, "", "GET", function(error, response, body)
@@ -107,6 +108,7 @@ function HarmonyTV(log, config)
 
       statusemitter.on("statuspoll", function(responseBody)
       {
+        that.log("responseBody: " + responseBody)
         var powerOn = false;
         jsonStatus  = JSON.parse(responseBody);
         harmonyStatusOff = jsonStatus.off;
@@ -118,7 +120,7 @@ function HarmonyTV(log, config)
         else
         { powerOn = true; }
 
-        that.log("HarmonyTV: State si currently: " + powerOn);
+        that.log("HarmonyTV: State is currently: " + powerOn);
 
         that.tvService.getCharacteristic(Characteristic.Active).updateValue(powerOn);
       });
