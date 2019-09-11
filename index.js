@@ -82,12 +82,12 @@ function HarmonyTV(log, config)
   }.bind(this));
 
   // Status Polling
-  if (this.apiIP && this.apiPort)
+  if (that.apiIP && that.apiPort)
   {
     statusURL = baseURL + "/" + harmonyHubs + "/status";
     var statusemitter = pollingtoevent(function(done)
     {
-      this.httpRequest(statusURL, "", "GET", function(error, response, body)
+      that.httpRequest(statusURL, "", "GET", function(error, response, body)
       {
         if (error)
         {
@@ -95,7 +95,7 @@ function HarmonyTV(log, config)
             try
             { done(new Error("Network failure that must not stop homebridge!")); }
             catch (err)
-            { this.log(err.message); }
+            { that.log(err.message); }
           }
           else
           { done(null, body); }
@@ -116,9 +116,9 @@ function HarmonyTV(log, config)
         else
         { powerOn = true; }
 
-        this.log("HarmonyTV: State si currently: " + powerOn);
+        that.log("HarmonyTV: State si currently: " + powerOn);
 
-        this.tvService.getCharacteristic(Characteristic.Active).updateValue(powerOn);
+        that.tvService.getCharacteristic(Characteristic.Active).updateValue(powerOn);
       });
     }
 }
