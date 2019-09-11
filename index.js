@@ -67,7 +67,7 @@ function HarmonyTV(log, config)
 
           this.log("LENGTH: " + jsonAct.activities.length);
 
-          for (var key = 0; jsonAct.activities.length; key++)
+          for (var key = 0; key < jsonAct.activities.length; key++)
           {
             this.log("KEY: " + key);
             this.log("HarmonyTV: Activity found: " + jsonAct.activities[key].slug);
