@@ -69,6 +69,7 @@ function HarmonyTV(log, config)
 
           for (var key = 0; jsonAct.activities.length; key++)
           {
+            this.log("KEY: " + key);
             this.log("HarmonyTV: Activity found: " + jsonAct.activities[key].slug);
           }
 
