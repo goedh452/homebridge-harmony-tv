@@ -1,5 +1,6 @@
 var Service, Characteristic;
 var request = require("request");
+var pollingtoevent = require('polling-to-event');
 
 var baseURL;
 var activitiesURL;
