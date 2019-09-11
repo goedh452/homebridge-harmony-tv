@@ -8,10 +8,7 @@ var statusURL;
 var jsonHub;
 var jsonAct;
 var jsonStatus;
-var harmonyHubs;
-var harmonyActs;
 var harmonyStatusOff;
-var activityArray = new Array();
 
 module.exports = function(homebridge) {
   Service = homebridge.hap.Service;
@@ -107,9 +104,11 @@ HarmonyTV.prototype = {
       }
       else
       {
+        var harmonyHubs;
         jsonHub = JSON.parse(hubBody);
         harmonyHubs = jsonHub.hubs[0];
         this.log("HarmonyTV: HUB found: " + harmonyHubs);
+        callback(harmonyHubs);
       }
     }.bind(this));
 
@@ -129,12 +128,14 @@ HarmonyTV.prototype = {
       }
       else
       {
+        var activityArray = new Array();
         jsonAct = JSON.parse(activityBody);
 
         for (var key = 0; key < jsonAct.activities.length; key++)
         {
           this.log("HarmonyTV: Activity found: " + jsonAct.activities[key].slug);
           activityArray.push(jsonAct.activities[key].slug);
+          callback(activityArray);
         }
       }
     }.bind(this));
