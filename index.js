@@ -121,10 +121,10 @@ HarmonyTV.prototype = {
         jsonStatus = JSON.parse(responseBody);
         harmonyStatusOff = jsonStatus.off;
 
-        if harmonyStatusOff
-        { powerOn = fasle; }
+        if ( harmonyStatusOff )
+        { powerOn = false; }
         else
-        { powerOn = true; };
+        { powerOn = true; }
 
         }
         callback(null, powerOn);
