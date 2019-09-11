@@ -92,7 +92,7 @@ function HarmonyTV(log, config)
 
 HarmonyTV.prototype = {
 
-  getHubs: function()
+  getHubs: function(callback)
   {
     // Get Harmony Hubs
     baseURL = "http://" + this.apiIP + ":" + this.apiPort + "/hubs";
