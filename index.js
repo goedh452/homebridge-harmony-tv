@@ -64,9 +64,8 @@ function HarmonyTV(log, config)
         else
         {
           jsonAct = JSON.parse(responseBody);
-          this.log("Activity responsebody: " + responseBody);
 
-          for (var key = 0; jsonAct.activities.length; key++)
+          for (var key = 0; jsonAct.activities !== undefined; key++)
           {
             this.log("Activity found: " + jsonAct.activities[key].slug);
           }
