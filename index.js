@@ -79,13 +79,14 @@ function HarmonyTV(log, config)
         }
       }.bind(this));
     }
+    callback();
   }.bind(this));
 
   // Status Polling
   if (that.apiIP && that.apiPort)
   {
     statusURL = baseURL + "/" + harmonyHubs + "/status";
-    that.log("statusURL: " + statusURL)
+    that.log("statusURL: " + statusURL);
     var statusemitter = pollingtoevent(function(done)
     {
       that.httpRequest(statusURL, "", "GET", function(error, response, body)
@@ -108,7 +109,7 @@ function HarmonyTV(log, config)
 
       statusemitter.on("statuspoll", function(responseBody)
       {
-        that.log("responseBody: " + responseBody)
+        that.log("responseBody: " + responseBody);
         var powerOn = false;
         jsonStatus  = JSON.parse(responseBody);
         harmonyStatusOff = jsonStatus.off;
