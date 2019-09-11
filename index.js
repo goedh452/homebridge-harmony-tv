@@ -3,10 +3,13 @@ var request = require("request");
 
 var baseURL;
 var activitiesURL;
+var statusURL;
 var jsonHub;
 var jsonAct;
+var jsonStatus;
 var harmonyHubs;
 var harmonyActs;
+var harmonyStatus;
 var activityArray = new Array();
 
 module.exports = function(homebridge) {
@@ -102,7 +105,23 @@ HarmonyTV.prototype = {
 
   getPowerState: function(callback)
   {
+    // Get current status
+    statusURL = "http://" + this.ApiIP + ":" + this.ApiPort + harmonyHubs + "/status";
 
+    this.httpRequest(statusURL, "", "GET", function(error, response, responseBody)
+    {
+      if (error)
+      {
+        this.log('Get hub failed: %s', error.message);
+        callback(error);
+      }
+      else
+      {
+        jsonStatus = JSON.parse(responseBody);
+        harmonyStatus = jsonStatus.off[0];
+        this.log("HarmonyTV: Current status: " + harmonyStatus);
+      }
+    }.bind(this));
   },
 
   setPowerState: function(callback)
