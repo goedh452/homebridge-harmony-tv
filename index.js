@@ -9,7 +9,7 @@ var jsonAct;
 var jsonStatus;
 var harmonyHubs;
 var harmonyActs;
-var harmonyStatus;
+var harmonyStatusOff;
 var activityArray = new Array();
 
 module.exports = function(homebridge) {
@@ -117,10 +117,17 @@ HarmonyTV.prototype = {
       }
       else
       {
-        this.log(responseBody);
+        var powerOn = false;
         jsonStatus = JSON.parse(responseBody);
-        harmonyStatus = jsonStatus.off;
-        this.log("HarmonyTV: Current status: " + harmonyStatus);
+        harmonyStatusOff = jsonStatus.off;
+
+        if harmonyStatusOff
+        { powerOn = fasle; }
+        else
+        { powerOn = true; };
+
+        }
+        callback(null, powerOn);
       }
     }.bind(this));
   },
