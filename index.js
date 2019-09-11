@@ -117,8 +117,8 @@ HarmonyTV.prototype = {
       }
       else
       {
-        jsonStatus = JSON.parse(responseBody);
         this.log(responseBody);
+        jsonStatus = JSON.parse(responseBody);
         harmonyStatus = jsonStatus.off[0];
         this.log("HarmonyTV: Current status: " + harmonyStatus);
       }
