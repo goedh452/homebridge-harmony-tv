@@ -39,6 +39,7 @@ function HarmonyTV(log, config)
   this.serial       = config.serial              || "Harmony TV";
   this.firmware     = "0.0.1";
 
+  var that = this;
 
   // Get Harmony Hubs
   baseURL = "http://" + this.apiIP + ":" + this.apiPort + "/hubs";
@@ -98,7 +99,7 @@ function HarmonyTV(log, config)
           }
           else
           { done(null, body); }
-        }.bind(this))
+        })
       }, {
         interval: this.pollingInterval,
         eventName: "statuspoll"
