@@ -112,12 +112,13 @@ HarmonyTV.prototype = {
     {
       if (error)
       {
-        this.log('Get hub failed: %s', error.message);
+        this.log('Get status failed: %s', error.message);
         callback(error);
       }
       else
       {
         jsonStatus = JSON.parse(responseBody);
+        this.log(responseBody);
         harmonyStatus = jsonStatus.off[0];
         this.log("HarmonyTV: Current status: " + harmonyStatus);
       }
