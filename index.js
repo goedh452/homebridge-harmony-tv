@@ -111,7 +111,9 @@ function HarmonyTV(log, config)
         jsonStatus  = JSON.parse(responseBody);
         harmonyStatusOff = jsonStatus.off;
 
-        if ( harmonyStatusOff == true  )
+        that.log("harmonyStatusOff: " + harmonyStatusOff);
+
+        if ( harmonyStatusOff === true  )
         { powerOn = false; }
         else
         { powerOn = true; }
