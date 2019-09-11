@@ -7,6 +7,7 @@ var jsonHub;
 var jsonAct;
 var harmonyHubs;
 var harmonyActs;
+var activityArray = new Array();
 
 module.exports = function(homebridge) {
   Service = homebridge.hap.Service;
@@ -52,7 +53,6 @@ function HarmonyTV(log, config)
 
       // Get hub activities
       activitiesURL = baseURL + "/" + harmonyHubs + "/activities";
-      this.log("activitiesURL: " + activitiesURL);
 
       this.httpRequest(activitiesURL, "", "GET", function(error, response, responseBody)
       {
@@ -66,8 +66,13 @@ function HarmonyTV(log, config)
           jsonAct = JSON.parse(responseBody);
           this.log("Activity responsebody: " + responseBody);
 
-          harmonyActs = jsonAct.activities[0].slug;
-          this.log("Activities received: " + harmonyActs);
+          for (var key = 0; jsonAct.activities.length; key++)
+          {
+            this.log("Activity found: " + jsonAct.activities[key].slug);
+          }
+
+          //harmonyActs = jsonAct.activities[0].slug;
+
         }
       }.bind(this));
     }
