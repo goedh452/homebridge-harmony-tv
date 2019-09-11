@@ -49,29 +49,27 @@ function HarmonyTV(log, config)
       jsonHub = JSON.parse(responseBody);
       harmonyHubs = jsonHub.hubs[0];
       this.log("HUB found: " + harmonyHubs);
-      callback();
-    }
-  }.bind(this));
 
-  // Get hub activities
-  activitiesURL = baseURL + "/" + harmonyHubs + "/activities";
-  this.log("activitiesURL: " + activitiesURL);
+      // Get hub activities
+      activitiesURL = baseURL + "/" + harmonyHubs + "/activities";
+      this.log("activitiesURL: " + activitiesURL);
 
-  this.httpRequest(activitiesURL, "", "GET", function(error, response, responseBody)
-  {
-    if (error)
-    {
-      this.log('Get activities failed: %s', error.message);
-      callback(error);
-    }
-    else
-    {
-      jsonAct = JSON.parse(responseBody);
-      this.log("Activity responsebody: " + responseBody);
+      this.httpRequest(activitiesURL, "", "GET", function(error, response, responseBody)
+      {
+        if (error)
+        {
+          this.log('Get activities failed: %s', error.message);
+          callback(error);
+        }
+        else
+        {
+          jsonAct = JSON.parse(responseBody);
+          this.log("Activity responsebody: " + responseBody);
 
-      harmonyActs = jsonAct.activities[0].slug;
-      this.log("Activities received: " + harmonyActs);
-      callback();
+          harmonyActs = jsonAct.activities[0].slug;
+          this.log("Activities received: " + harmonyActs);
+        }
+      }.bind(this));
     }
   }.bind(this));
 }
