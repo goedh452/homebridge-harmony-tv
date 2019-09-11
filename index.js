@@ -117,7 +117,7 @@ HarmonyTV.prototype = {
   getActivities: function(callback)
   {
     // Get hub activities
-    activitiesURL = baseURL + "/" + harmonyHubs + "/activities";
+    activitiesURL = baseURL + "/" + this.harmonyHubs + "/activities";
 
     this.httpRequest(activitiesURL, "", "GET", function(error, response, activityBody)
     {
