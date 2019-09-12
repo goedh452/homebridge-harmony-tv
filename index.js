@@ -86,9 +86,7 @@ HarmonyTV.prototype = {
   handleErrors: function(error)
   {
     this.log("An error has occured: " + error);
-
-
-  }
+  },
 
   httpRequest: function(url, body, method, callback)
   {
