@@ -45,7 +45,8 @@ function HarmonyTV(log, config)
 
   promise.then(function(harmonyHubs)
     {
-      hubBody = request(baseURL);
+      hubBody = request(this.baseURL);
+      this.log("hubBody: " + hubBody)
       jsonHub = JSON.parse(hubBody);
       harmonyHubs = jsonHub.hubs[0];
       this.log("HarmonyTV: HUB found: " + harmonyHubs);
@@ -57,6 +58,11 @@ function HarmonyTV(log, config)
       activitiesURL = baseURL + "/" + this.harmonyHubs + "/activities";
       this.log("activitiesURL: " + activitiesURL);
     });
+
+  promise.catch(function()
+  {
+    this.log("An error has occured");
+  });
 }
 
 
