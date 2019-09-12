@@ -39,7 +39,7 @@ function HarmonyTV(log, config)
 
   const resolveActivities = request(baseURL);
 
-resolveActivities
+  resolveActivities
     .then(this.getHubs)
     .then(this.getActivities)
     .catch(this.handleErrors);
@@ -53,7 +53,7 @@ HarmonyTV.prototype = {
     jsonHub = JSON.parse(hubBody);
     harmonyHubs = jsonHub.hubs[0];
     this.log("HarmonyTV: HUB found: " + harmonyHubs);
-    resolve(harmonyHubs);
+    return(harmonyHubs);
   },
 
   getActivities: function(callback)
@@ -77,7 +77,7 @@ HarmonyTV.prototype = {
         {
           this.log("HarmonyTV: Activity found: " + jsonAct.activities[key].slug);
           activityArray.push(jsonAct.activities[key].slug);
-          callback(null, activityArray);
+          return(activityArray);
         }
       }
     }.bind(this));
@@ -86,6 +86,7 @@ HarmonyTV.prototype = {
   handleErrors: function(error)
   {
     this.log("An error has occured: " + error);
+    return();
   },
 
   httpRequest: function(url, body, method, callback)
