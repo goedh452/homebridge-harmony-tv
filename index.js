@@ -37,40 +37,23 @@ function HarmonyTV(log, config)
 
   const baseURL = "http://" + this.apiIP + ":" + this.apiPort + "/hubs";
 
-  const hubRequest = request(baseURL);
+  const resolveActivities = request(baseURL);
 
-  this.log("hubRequest: " + hubRequest);
-
-
+resolveActivities
+    .then(getHubs)
+    .then(getActivities)
+    .catch(handleErrors);
 }
-
-
 
 
 HarmonyTV.prototype = {
 
-  getHubs: function(callback)
+  getHubs: function(harmonyHubs)
   {
-    // Get Harmony Hubs
-
-
-    this.httpRequest(baseURL, "", "GET", function(error, response, hubBody)
-    {
-      if (error)
-      {
-        this.log('Get hub failed: %s', error.message);
-        callback(error);
-      }
-      else
-      {
-        var harmonyHubs;
-        jsonHub = JSON.parse(hubBody);
-        harmonyHubs = jsonHub.hubs[0];
-        this.log("HarmonyTV: HUB found: " + harmonyHubs);
-        callback(null, harmonyHubs);
-      }
-    }.bind(this));
-
+    jsonHub = JSON.parse(hubBody);
+    harmonyHubs = jsonHub.hubs[0];
+    this.log("HarmonyTV: HUB found: " + harmonyHubs);
+    resolve(harmonyHubs);
   },
 
   getActivities: function(callback)
@@ -99,6 +82,13 @@ HarmonyTV.prototype = {
       }
     }.bind(this));
   },
+
+  handleErrors: function(error)
+  {
+    this.log("An error has occured: " + error);
+
+
+  }
 
   httpRequest: function(url, body, method, callback)
   {
