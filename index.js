@@ -53,34 +53,15 @@ HarmonyTV.prototype = {
     jsonHub = JSON.parse(hubBody);
     harmonyHubs = jsonHub.hubs[0];
     this.log("HarmonyTV: HUB found: " + harmonyHubs);
-    return(harmonyHubs);
+    resolve(harmonyHubs);
   },
 
   getActivities: function(callback)
   {
     // Get hub activities
     activitiesURL = baseURL + "/" + this.harmonyHubs + "/activities";
-
-    this.httpRequest(activitiesURL, "", "GET", function(error, response, activityBody)
-    {
-      if (error)
-      {
-        this.log('Get activities failed: %s', error.message);
-        callback(error);
-      }
-      else
-      {
-        var activityArray = new Array();
-        jsonAct = JSON.parse(activityBody);
-
-        for (var key = 0; key < jsonAct.activities.length; key++)
-        {
-          this.log("HarmonyTV: Activity found: " + jsonAct.activities[key].slug);
-          activityArray.push(jsonAct.activities[key].slug);
-          return(activityArray);
-        }
-      }
-    }.bind(this));
+    this.log("activitiesURL: " + activitiesURL);
+    resolve(activitiesURL);
   },
 
   handleErrors: function(error)
