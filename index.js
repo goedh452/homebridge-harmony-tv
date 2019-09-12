@@ -21,71 +21,30 @@ function HarmonyTV(log, config)
 {
   this.log = log;
 
-  this.name         = config.name                || "Harmony TV";
-
-  // Harmony API settings
-  this.apiIP        = config.ApiIP               || "192.168.1.117";
-  this.apiPort      = config.ApiPort             || 8282;
-
-  this.pollingInterval = config.pollingInterval  || 5000;
-  this.timeout         = config.timeout          || 5000;
-
-  // Manufacturer information
-  this.manufacturer = config.manufacturer        || "goedh452";
-  this.model        = config.model               || "Harmony TV";
-  this.serial       = config.serial              || "Harmony TV";
-  this.firmware     = "0.0.1";
+  this.name             = config.name             || "Harmony TV";
+  this.apiIP            = config.ApiIP            || "192.168.1.117";
+  this.apiPort          = config.ApiPort          || 8282;
+  this.pollingInterval  = config.pollingInterval  || 5000;
+  this.timeout          = config.timeout          || 5000;
+  this.manufacturer     = config.manufacturer     || "goedh452";
+  this.model            = config.model            || "Harmony TV";
+  this.serial           = config.serial           || "Harmony TV";
 
   var that = this;
 
-  this.getHubs();
-  this.getActivities();
+  //this.getHubs();
+  //this.getActivities();
 
-  // Status Polling
-  if (that.apiIP && that.apiPort)
-  {
-    statusURL = baseURL + "/" + harmonyHubs + "/status";
-    that.log("statusURL: " + statusURL);
-    var statusemitter = pollingtoevent(function(done)
-    {
-      that.httpRequest(statusURL, "", "GET", function(error, response, body)
-      {
-        if (error)
-        {
-          this.log('HarmonyTV get status function failed: %s', error.message);
-            try
-            { done(new Error("Network failure that must not stop homebridge!")); }
-            catch (err)
-            { that.log(err.message); }
-          }
-          else
-          { done(null, body); }
-        })
-      }, {
-        interval: this.pollingInterval,
-        eventName: "statuspoll"
-      });
+  const baseURL = "http://" + this.apiIP + ":" + this.apiPort + "/hubs";
 
-      statusemitter.on("statuspoll", function(statusBody)
-      {
-        that.log("responseBody: " + statusBody);
-        var powerOn = false;
-        jsonStatus  = JSON.parse(statusBody);
-        harmonyStatusOff = jsonStatus.off;
+  const hubRequest = request(baseURL);
 
-        that.log("harmonyStatusOff: " + harmonyStatusOff);
+  this.log("hubRequest: " + hubRequest);
 
-        if ( harmonyStatusOff === true  )
-        { powerOn = false; }
-        else
-        { powerOn = true; }
 
-        that.log("HarmonyTV: State is currently: " + powerOn);
-
-        that.tvService.getCharacteristic(Characteristic.Active).updateValue(powerOn);
-      });
-    }
 }
+
+
 
 
 HarmonyTV.prototype = {
@@ -93,7 +52,7 @@ HarmonyTV.prototype = {
   getHubs: function(callback)
   {
     // Get Harmony Hubs
-    baseURL = "http://" + this.apiIP + ":" + this.apiPort + "/hubs";
+
 
     this.httpRequest(baseURL, "", "GET", function(error, response, hubBody)
     {
