@@ -40,9 +40,9 @@ function HarmonyTV(log, config)
   const resolveActivities = request(baseURL);
 
 resolveActivities
-    .then(getHubs)
-    .then(getActivities)
-    .catch(handleErrors);
+    .then(this.getHubs)
+    .then(this.getActivities)
+    .catch(this.handleErrors);
 }
 
 
