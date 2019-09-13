@@ -34,29 +34,14 @@ function HarmonyTV(log, config)
 
   this.baseURL = "http://" + this.apiIP + ":" + this.apiPort + "/hubs";
 
-  getHubInfo();
-
-  async function getHubInfo()
-  {
-    await getHubs();
-    await getActivities();
-  }
-
   function getHubs()
   {
-    that.httpRequest(that.baseURL, function(error, response, hubBody)
-    {
-      if (error)
-      {
-        console.log("Get hubs failed: %s", error.message);
-      }
-      else
-      {
-        var jsonHub = JSON.parse(hubBody);
-        this.harmonyHubs = jsonHub.hubs[0];
-        console.log("HarmonyTV: HUB found: " + this.harmonyHubs);
-      }
-    });
+    var hubBody = await this.httpRequest(this.baseURL);
+    console.log("hubBody: " + hubBody);
+
+    var jsonHub = JSON.parse(hubBody);
+    this.harmonyHubs = jsonHub.hubs[0];
+    console.log("HarmonyTV: HUB found: " + this.harmonyHubs);
   }
 
   function getActivities()
@@ -64,49 +49,34 @@ function HarmonyTV(log, config)
     this.activitiesURL = this.baseURL + "/" + this.harmonyHubs + "/activities";
     console.log("activitiesURL: " + this.activitiesURL);
 
-    that.httpRequest(this.activitiesURL, function(error, response, activityBody)
+    var jsonAct = JSON.parse(activityBody);
+    for (var key = 0; key < jsonAct.activities.length; key++)
     {
-      if (error)
-      {
-        console.log("Get activities failed: %s", error.message);
-      }
-      else
-      {
-        var jsonAct = JSON.parse(activityBody);
-
-        for (var key = 0; key < jsonAct.activities.length; key++)
-        {
-          console.log("HarmonyTV: Activity found: " + jsonAct.activities[key].slug);
-          this.activityArray.push(jsonAct.activities[key].slug);
-        }
-      }
-    });
+      console.log("HarmonyTV: Activity found: " + jsonAct.activities[key].slug);
+      this.activityArray.push(jsonAct.activities[key].slug);
+    }
   }
 }
 
 
 HarmonyTV.prototype = {
 
-  httpRequest: function(url, callback)
-  {
-    var callbackMethod = callback;
+  httpRequest(url) {
+    return new Promise((resolve, reject) => {
+        request(url, (error, response, body) => {
+          console.log("ERROR: " + error);
+          console.log("RESPONSE: " + response);
+          console.log("BODY: " + body);
 
-    request({
-        url: url,
-        body: "",
-        method: "GET",
-        timeout: this.timeout,
-        rejectUnauthorized: false
-      },
-      function(error, response, responseBody)
-      {
-        if (callbackMethod)
-        {
-          callbackMethod(error, response, responseBody);
-        }
-
-      })
+            if (error) reject(error);
+            if (response.statusCode != 200) {
+                reject('Invalid status code <' + response.statusCode + '>');
+            }
+            resolve(body);
+        });
+    });
   },
+
 
   getPowerState: function(callback)
   {
