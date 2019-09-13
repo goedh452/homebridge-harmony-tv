@@ -1,5 +1,5 @@
 var Service, Characteristic;
-var request = require("request");
+var request = require("sync-request");
 var pollingtoevent = require('polling-to-event');
 
 var baseURL;
@@ -31,57 +31,87 @@ function HarmonyTV(log, config)
   this.serial           = config.serial           || "Harmony TV";
 
   var that = this;
+  this.baseURL = "http://" + this.apiIP + ":" + this.apiPort + "/hubs";
 
   getHubs();
   getActivities();
 
-  this.baseURL = "http://" + this.apiIP + ":" + this.apiPort + "/hubs";
-
-  async function getHubs()
-  {
-    var hubBody = await this.httpRequest(this.baseURL);
-    console.log("hubBody: " + hubBody);
-
-    var jsonHub = JSON.parse(hubBody);
-    this.harmonyHubs = jsonHub.hubs[0];
-    console.log("HarmonyTV: HUB found: " + this.harmonyHubs);
-  }
-
-  async function getActivities()
-  {
-    this.activitiesURL = this.baseURL + "/" + this.harmonyHubs + "/activities";
-    console.log("activitiesURL: " + this.activitiesURL);
-
-    var activityBody = await this.httpRequest(this.activitiesURL);
-
-    var jsonAct = JSON.parse(activityBody);
-    for (var key = 0; key < jsonAct.activities.length; key++)
-    {
-      console.log("HarmonyTV: Activity found: " + jsonAct.activities[key].slug);
-      this.activityArray.push(jsonAct.activities[key].slug);
-    }
-  }
 }
 
 
 HarmonyTV.prototype = {
 
-  httpRequest(url) {
-    return new Promise((resolve, reject) => {
-        request(url, (error, response, body) => {
-          console.log("ERROR: " + error);
-          console.log("RESPONSE: " + response);
-          console.log("BODY: " + body);
+  getHubs: function(callback)
+  {
+    // Get Harmony Hubs
+    baseURL = "http://" + this.apiIP + ":" + this.apiPort + "/hubs";
 
-            if (error) reject(error);
-            if (response.statusCode != 200) {
-                reject('Invalid status code <' + response.statusCode + '>');
-            }
-            resolve(body);
-        });
-    });
+    this.httpRequest(baseURL, "", "GET", function(error, response, hubBody)
+    {
+      if (error)
+      {
+        this.log('Get hub failed: %s', error.message);
+        callback(error);
+      }
+      else
+      {
+        var harmonyHubs;
+        jsonHub = JSON.parse(hubBody);
+        harmonyHubs = jsonHub.hubs[0];
+        this.log("HarmonyTV: HUB found: " + harmonyHubs);
+        callback(null, harmonyHubs);
+      }
+    }.bind(this));
+
   },
 
+  getActivities: function(callback)
+  {
+    // Get hub activities
+    activitiesURL = baseURL + "/" + this.harmonyHubs + "/activities";
+
+    this.httpRequest(activitiesURL, "", "GET", function(error, response, activityBody)
+    {
+      if (error)
+      {
+        this.log('Get activities failed: %s', error.message);
+        callback(error);
+      }
+      else
+      {
+        var activityArray = new Array();
+        jsonAct = JSON.parse(activityBody);
+
+        for (var key = 0; key < jsonAct.activities.length; key++)
+        {
+          this.log("HarmonyTV: Activity found: " + jsonAct.activities[key].slug);
+          activityArray.push(jsonAct.activities[key].slug);
+          callback(null, activityArray);
+        }
+      }
+    }.bind(this));
+  },
+
+  httpRequest: function(url, body, method, callback)
+  {
+    var callbackMethod = callback;
+
+    request({
+        url: url,
+        body: body,
+        method: method,
+        timeout: this.timeout,
+        rejectUnauthorized: false
+      },
+      function(error, response, responseBody)
+      {
+        if (callbackMethod)
+        {
+          callbackMethod(error, response, responseBody);
+        }
+
+      })
+  },
 
   getPowerState: function(callback)
   {
