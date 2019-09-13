@@ -37,10 +37,18 @@ function HarmonyTV(log, config)
 
   this.baseURL = "http://" + this.apiIP + ":" + this.apiPort + "/hubs";
 
-  getHubs();
-  getActivities();
+  getHubInfo();
 
-  function getHubs(callback)
+  async function getHubInfo()
+  {
+    var hubsFound = await getHubs();
+
+    console.log("HUBS FOUND: " + hubsFound);
+  }
+
+
+
+  function getHubs()
   {
     that.httpRequest(that.baseURL, function(error, response, hubBody)
     {
@@ -58,30 +66,6 @@ function HarmonyTV(log, config)
       }
     });
   }
-
-  function getActivities(callback)
-  {
-    this.activitiesURL = baseURL + "/" + this.harmonyHubs + "/activities";
-
-    that.httpRequest(activitiesURL, function(error, response, activityBody)
-    {
-      if (error)
-      {
-        console.log("Get activities failed: %s", error.message);
-      }
-      else
-      {
-        this.jsonAct = JSON.parse(activityBody);
-
-        for (var key = 0; key < this.jsonAct.activities.length; key++)
-        {
-          console.log("HarmonyTV: Activity found: " + this.jsonAct.activities[key].slug);
-          this.activityArray.push(this.jsonAct.activities[key].slug);
-        }
-      }
-    });
-  }
-
 }
 
 
