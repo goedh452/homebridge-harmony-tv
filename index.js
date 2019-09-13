@@ -22,7 +22,7 @@ function HarmonyTV(log, config)
   this.model            = config.model            || "Harmony TV";
   this.serial           = config.serial           || "Harmony TV";
 
-  var this.baseURL = "http://" + this.apiIP + ":" + this.apiPort + "/hubs";
+  var baseURL = "http://" + this.apiIP + ":" + this.apiPort + "/hubs";
   var harmonyHubs = this.getHubs(this.baseURL);
 
   console.log("HARHUBS: " + this.harmonyHubs);
