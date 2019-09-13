@@ -30,13 +30,12 @@ function HarmonyTV(log, config)
   this.model            = config.model            || "Harmony TV";
   this.serial           = config.serial           || "Harmony TV";
 
-  async function getHubs()
+  this.baseURL = "http://" + this.apiIP + ":" + this.apiPort + "/hubs";
+
+  async function getHubs(baseURL)
   {
-    console.log("apiIP: " + this.apiIP);
-    console.log("apiPort: " + this.apiPort);
-    this.baseURL = "http://" + this.apiIP + ":" + this.apiPort + "/hubs";
-    console.log("baseURL: " + this.baseURL);
-    var hubBody = await httpRequest(this.baseURL);
+    console.log("baseURL: " + baseURL);
+    var hubBody = await httpRequest(baseURL);
     console.log("hubBody: " + hubBody);
 
     var jsonHub = JSON.parse(hubBody);
@@ -75,7 +74,7 @@ function HarmonyTV(log, config)
     });
   }
 
-  getHubs();
+  getHubs(this.baseURL);
   getActivities();
 }
 
