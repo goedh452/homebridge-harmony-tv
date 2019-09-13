@@ -5,11 +5,8 @@ var pollingtoevent = require('polling-to-event');
 var baseURL;
 var activitiesURL;
 var statusURL;
-var jsonHub;
 var jsonAct;
 var jsonStatus;
-var hubBody;
-var harmonyHubs;
 var harmonyStatusOff;
 var activityArray = new Array();
 
@@ -55,14 +52,13 @@ function HarmonyTV(log, config)
       if (error)
       {
         console.log("Get hubs failed: %s", error.message);
-        callback(error);
       }
       else
       {
-        this.jsonHub = JSON.parse(hubBody);
-        this.harmonyHubs = this.jsonHub.hubs[0];
-        console.log("HarmonyTV: HUB found: " + this.harmonyHubs);
-        callback(this.harmonyHubs);
+        var jsonHub = JSON.parse(hubBody);
+        var harmonyHubs = jsonHub.hubs[0];
+        console.log("HarmonyTV: HUB found: " + harmonyHubs);
+        return harmonyHubs;
       }
     });
   }
