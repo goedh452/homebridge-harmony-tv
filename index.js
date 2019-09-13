@@ -30,9 +30,6 @@ function HarmonyTV(log, config)
   this.model            = config.model            || "Harmony TV";
   this.serial           = config.serial           || "Harmony TV";
 
-  getHubs();
-  getActivities();
-
   async function getHubs()
   {
     this.baseURL = "http://" + this.apiIP + ":" + this.apiPort + "/hubs";
@@ -75,6 +72,9 @@ function HarmonyTV(log, config)
         });
     });
   }
+
+  getHubs();
+  getActivities();
 }
 
 
