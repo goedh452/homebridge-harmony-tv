@@ -45,13 +45,13 @@ function HarmonyTV(log, config)
     {
       if (error)
       {
-        this.log("Get hubs failed: %s", error.message);
+        console.log("Get hubs failed: %s", error.message);
       }
       else
       {
         this.jsonHub = JSON.parse(hubBody);
         this.harmonyHubs = jsonHub.hubs[0];
-        this.log("HarmonyTV: HUB found: " + this.harmonyHubs);
+        console.log("HarmonyTV: HUB found: " + this.harmonyHubs);
       }
     });
   }
