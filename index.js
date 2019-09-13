@@ -34,8 +34,11 @@ function HarmonyTV(log, config)
 
   this.baseURL = "http://" + this.apiIP + ":" + this.apiPort + "/hubs";
 
-  await getHubs();
-  await getActivities();
+  async function getHubInfo()
+  {
+    await getHubs();
+    await getActivities();
+  }
 
   function getHubs()
   {
