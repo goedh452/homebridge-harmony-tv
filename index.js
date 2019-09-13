@@ -34,31 +34,31 @@ function HarmonyTV(log, config)
 
   var that = this;
 
-  //this.getHubs();
-  //this.getActivities();
+  getHubs(callback);
+  //this.getActivities(callback);
 
   this.baseURL = "http://" + this.apiIP + ":" + this.apiPort + "/hubs";
 
-  var getHubInfo = new Promise(function(resolve, reject)
+  function getHubs(callback)
   {
-    this.httpRequest(this.baseURL, function(error, response, hubBody)
+    this.httpRequest(baseURL, function(error, response, hubBody)
     {
       if (error)
-      { reject(error); }
+      {
+        this.log("Get hubs failed: %s", error.message);
+        callback(error);
+      }
       else
       {
-        this.jsonHub = JSON.parse(hubBody);
-        this.harmonyHubs = jsonHub.hubs[0];
-        console.log("HarmonyTV: HUB found: " + harmonyHubs);
-        resolve(harmonyHubs);
+        var harmonyHubs;
+        jsonHub = JSON.parse(hubBody);
+        harmonyHubs = jsonHub.hubs[0];
+        this.log("HarmonyTV: HUB found: " + harmonyHubs);
+        callback(null, harmonyHubs);
       }
-    }.bind(this))
+    }.bind(this));
+  }
 
-    .catch(function(error)
-    {
-      console.log("An error has occured: " + error);
-    });
-  });
 }
 
 
