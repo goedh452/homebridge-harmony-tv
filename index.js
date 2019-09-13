@@ -1,6 +1,6 @@
 var Service, Characteristic;
 var request = require("request");
-var pollingtoevent = require('polling-to-event');
+var pollingtoevent = require("polling-to-event");
 
 var baseURL;
 var activitiesURL;
@@ -72,6 +72,9 @@ function HarmonyTV(log, config)
         });
     });
   }
+
+  console.log("apiIP: " + this.apiIP);
+  console.log("apiPort: " + this.apiPort);
 
   getHubs();
   getActivities();
