@@ -43,12 +43,18 @@ function HarmonyTV(log, config)
 
   var getHubInfo = new Promise(function(resolve, reject)
   {
-    this.hubBody = request(this.baseURL);
-    this.log("hubBody: " + hubBody);
-    this.jsonHub = JSON.parse(hubBody);
-    this.harmonyHubs = jsonHub.hubs[0];
-    this.log("HarmonyTV: HUB found: " + harmonyHubs);
-    resolve(harmonyHubs);
+    this.httpRequest(this.baseURL, function(error, response, hubBody)
+    {
+      if (error)
+      { reject(error); }
+      else
+      {
+        this.jsonHub = JSON.parse(hubBody);
+        this.harmonyHubs = jsonHub.hubs[0];
+        this.log("HarmonyTV: HUB found: " + harmonyHubs);
+        resolve(harmonyHubs);
+      }
+    }.bind(this));
   });
 
   getHubInfo.then(function(response)
@@ -56,23 +62,23 @@ function HarmonyTV(log, config)
     this.log("Response: " + response);
   });
 
-  getHubInfo.catch(function()
+  getHubInfo.catch(function(error)
   {
-    this.log("An error has occured");
+    this.log("An error has occured: " + error);
   });
 }
 
 
 HarmonyTV.prototype = {
 
-  httpRequest: function(url, body, method, callback)
+  httpRequest: function(url, callback)
   {
     var callbackMethod = callback;
 
     request({
         url: url,
-        body: body,
-        method: method,
+        body: "",
+        method: "GET",
         timeout: this.timeout,
         rejectUnauthorized: false
       },
