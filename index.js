@@ -41,7 +41,7 @@ function HarmonyTV(log, config)
 
   function getHubs()
   {
-    that.httpRequest(this.baseURL, function(error, response, hubBody)
+    that.httpRequest(that.baseURL, function(error, response, hubBody)
     {
       if (error)
       {
