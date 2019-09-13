@@ -52,8 +52,7 @@ function HarmonyTV(log, config)
         console.log("HarmonyTV: HUB found: " + harmonyHubs);
         resolve(harmonyHubs);
       }
-    }.bind(this));
-    });
+    }.bind(this))
 
     .catch(function(error);
     {
