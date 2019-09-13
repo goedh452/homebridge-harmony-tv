@@ -43,6 +43,12 @@ function HarmonyTV(log, config)
 
   var getHubInfo = new Promise(function(resolve, reject)
   {
+    reso("SUCCES!");
+  });
+
+  getHubInfo.then(function(response)
+  {
+    this.log("Response: " + response);
     this.httpRequest(this.baseURL, function(error, response, hubBody)
     {
       if (error)
@@ -55,11 +61,6 @@ function HarmonyTV(log, config)
         resolve(harmonyHubs);
       }
     }.bind(this));
-  });
-
-  getHubInfo.then(function(response)
-  {
-    this.log("Response: " + response);
   });
 
   getHubInfo.catch(function(error)
