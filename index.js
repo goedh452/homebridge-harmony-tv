@@ -40,7 +40,7 @@ function HarmonyTV(log, config)
   getHubs();
   getActivities();
 
-  function getHubs()
+  function getHubs(callback)
   {
     that.httpRequest(that.baseURL, function(error, response, hubBody)
     {
@@ -59,7 +59,7 @@ function HarmonyTV(log, config)
     });
   }
 
-  function getActivities()
+  function getActivities(callback)
   {
     this.activitiesURL = baseURL + "/" + this.harmonyHubs + "/activities";
 
