@@ -46,7 +46,7 @@ function HarmonyTV(log, config)
 
   getHubInfo.then(function(response)
   {
-    this.log("Response: " + response);
+    console.log("Response: " + response);
     this.httpRequest(this.baseURL, function(error, response, hubBody)
     {
       if (error)
@@ -55,7 +55,7 @@ function HarmonyTV(log, config)
       {
         this.jsonHub = JSON.parse(hubBody);
         this.harmonyHubs = jsonHub.hubs[0];
-        this.log("HarmonyTV: HUB found: " + harmonyHubs);
+        console.log("HarmonyTV: HUB found: " + harmonyHubs);
         resolve(harmonyHubs);
       }
     }.bind(this));
@@ -63,7 +63,7 @@ function HarmonyTV(log, config)
 
   getHubInfo.catch(function(error)
   {
-    this.log("An error has occured: " + error);
+    console.log("An error has occured: " + error);
   });
 }
 
