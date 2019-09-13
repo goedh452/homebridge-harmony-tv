@@ -32,17 +32,6 @@ function HarmonyTV(log, config)
 
   this.baseURL = "http://" + this.apiIP + ":" + this.apiPort + "/hubs";
 
-  async function getHubs(baseURL)
-  {
-    console.log("baseURL: " + baseURL);
-    var hubBody = await httpRequest(baseURL);
-    console.log("hubBody: " + hubBody);
-
-    var jsonHub = JSON.parse(hubBody);
-    var harmonyHubs = jsonHub.hubs[0];
-    console.log("HarmonyTV: HUB found: " + this.harmonyHubs);
-  }
-
   async function getActivities()
   {
     this.activitiesURL = this.baseURL + "/" + this.harmonyHubs + "/activities";
@@ -58,7 +47,25 @@ function HarmonyTV(log, config)
     }
   }
 
-  function httpRequest(url) {
+
+
+  this.getHubs(this.baseURL);
+  //getActivities(this.baseURL);
+}
+
+
+HarmonyTV.prototype = {
+
+  getHubs: async function(baseURL)
+  {
+    var hubBody = await this.httpRequest(baseURL);
+    var jsonHub = JSON.parse(hubBody);
+    var harmonyHubs = jsonHub.hubs[0];
+    console.log("HarmonyTV: HUB found: " + harmonyHubs);
+  },
+
+  httpRequest: function(url)
+  {
     return new Promise((resolve, reject) => {
         request(url, (error, response, body) => {
           console.log("ERROR: " + error);
@@ -72,15 +79,7 @@ function HarmonyTV(log, config)
             resolve(body);
         });
     });
-  }
-
-  getHubs(this.baseURL);
-  //getActivities(this.baseURL);
-}
-
-
-HarmonyTV.prototype = {
-
+  },
 
   getPowerState: function(callback)
   {
