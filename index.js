@@ -32,8 +32,6 @@ function HarmonyTV(log, config)
   this.model            = config.model            || "Harmony TV";
   this.serial           = config.serial           || "Harmony TV";
 
-  var that = this;
-
   getHubs();
   //this.getActivities(callback);
 
@@ -41,7 +39,7 @@ function HarmonyTV(log, config)
 
   function getHubs()
   {
-    that.httpRequest(that.baseURL, function(error, response, hubBody)
+    this.httpRequest(this.baseURL, function(error, response, hubBody)
     {
       if (error)
       {
@@ -53,7 +51,7 @@ function HarmonyTV(log, config)
         this.harmonyHubs = jsonHub.hubs[0];
         console.log("HarmonyTV: HUB found: " + this.harmonyHubs);
       }
-    });
+    }.bind(this));
   }
 
 }
