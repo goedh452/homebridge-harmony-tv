@@ -54,7 +54,7 @@ function HarmonyTV(log, config)
       }
     }.bind(this))
 
-    .catch(function(error);
+    .catch(function(error)
     {
       console.log("An error has occured: " + error);
     }
