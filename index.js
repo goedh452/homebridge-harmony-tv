@@ -8,6 +8,8 @@ var statusURL;
 var jsonHub;
 var jsonAct;
 var jsonStatus;
+var hubBody;
+var harmonyHubs;
 var harmonyStatusOff;
 
 module.exports = function(homebridge) {
@@ -36,15 +38,13 @@ function HarmonyTV(log, config)
   //this.getActivities();
 
   this.baseURL = "http://" + this.apiIP + ":" + this.apiPort + "/hubs";
-this.log("baseURL: " + this.baseURL);
 
   var getHubInfo = new Promise(function(resolve, reject)
   {
-
-    hubBody = request(this.baseURL);
+    this.hubBody = request(this.baseURL);
     this.log("hubBody: " + hubBody);
-    jsonHub = JSON.parse(hubBody);
-    harmonyHubs = jsonHub.hubs[0];
+    this.jsonHub = JSON.parse(hubBody);
+    this.harmonyHubs = jsonHub.hubs[0];
     this.log("HarmonyTV: HUB found: " + harmonyHubs);
     resolve(harmonyHubs);
   });
