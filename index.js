@@ -53,7 +53,7 @@ function HarmonyTV(log, config)
         this.harmonyHubs = jsonHub.hubs[0];
         this.log("HarmonyTV: HUB found: " + this.harmonyHubs);
       }
-    };
+    });
   }
 
 }
