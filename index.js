@@ -5,10 +5,10 @@ var pollingtoevent = require('polling-to-event');
 var baseURL;
 var activitiesURL;
 var statusURL;
-var jsonAct;
 var jsonStatus;
 var harmonyStatusOff;
 var activityArray = new Array();
+var harmonyHubs;
 
 module.exports = function(homebridge) {
   Service = homebridge.hap.Service;
@@ -39,11 +39,8 @@ function HarmonyTV(log, config)
   async function getHubInfo()
   {
     var hubsFound = await getHubs();
-
-    console.log("HUBS FOUND: " + hubsFound);
+    var actsFound = await getActivities();
   }
-
-
 
   function getHubs()
   {
@@ -56,9 +53,33 @@ function HarmonyTV(log, config)
       else
       {
         var jsonHub = JSON.parse(hubBody);
-        var harmonyHubs = jsonHub.hubs[0];
-        console.log("HarmonyTV: HUB found: " + harmonyHubs);
+        this.harmonyHubs = jsonHub.hubs[0];
+        console.log("HarmonyTV: HUB found: " + this.harmonyHubs);
         return harmonyHubs;
+      }
+    });
+  }
+
+  function getActivities()
+  {
+    this.activitiesURL = this.baseURL + "/" + this.harmonyHubs + "/activities";
+    console.log("activitiesURL: " + this.activitiesURL);
+
+    that.httpRequest(this.activitiesURL, function(error, response, activityBody)
+    {
+      if (error)
+      {
+        console.log("Get activities failed: %s", error.message);
+      }
+      else
+      {
+        var jsonAct = JSON.parse(activityBody);
+
+        for (var key = 0; key < jsonAct.activities.length; key++)
+        {
+          console.log("HarmonyTV: Activity found: " + jsonAct.activities[key].slug);
+          this.activityArray.push(jsonAct.activities[key].slug);
+        }
       }
     });
   }
