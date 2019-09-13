@@ -34,10 +34,14 @@ function HarmonyTV(log, config)
 
   var that = this;
 
+  this.baseURL = "http://" + this.apiIP + ":" + this.apiPort + "/hubs";
+
+
+
   getHubs();
   //this.getActivities(callback);
 
-  that.baseURL = "http://" + this.apiIP + ":" + this.apiPort + "/hubs";
+
 
   function getHubs()
   {
