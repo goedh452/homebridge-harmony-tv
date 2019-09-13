@@ -23,22 +23,22 @@ function HarmonyTV(log, config)
   this.serial           = config.serial           || "Harmony TV";
 
   var baseURL = "http://" + this.apiIP + ":" + this.apiPort + "/hubs";
-  var harmonyHubs = this.getHubs(this.baseURL);
+  this.getHubs(this.baseURL, function(harmonyHubs){ console.log("HARHUBS: " + this.harmonyHubs);});
 
-  console.log("HARHUBS: " + this.harmonyHubs);
+
   //getActivities(this.baseURL);
 }
 
 
 HarmonyTV.prototype = {
 
-  getHubs: async function(baseURL)
+  getHubs: async function(baseURL, callback)
   {
     var hubBody = await this.httpRequest(baseURL);
     var jsonHub = JSON.parse(hubBody);
     var harmonyHubs = jsonHub.hubs[0];
     console.log("HarmonyTV: HUB found: " + harmonyHubs);
-    return harmonyHubs;
+    return calback(harmonyHubs);
   },
 
   getActivities: async function()
