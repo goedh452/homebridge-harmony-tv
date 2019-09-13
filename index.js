@@ -30,8 +30,6 @@ function HarmonyTV(log, config)
   this.model            = config.model            || "Harmony TV";
   this.serial           = config.serial           || "Harmony TV";
 
-  var that = this;
-
   getHubs();
   getActivities();
 
