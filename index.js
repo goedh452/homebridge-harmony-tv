@@ -34,6 +34,7 @@ HarmonyTV.prototype = {
 
   getHubs: async function(baseURL, callback)
   {
+    console.log("URL HIER: " + baseURL);
     var hubBody = await this.httpRequest(baseURL);
     var jsonHub = JSON.parse(hubBody);
     var harmonyHubs = jsonHub.hubs[0];
