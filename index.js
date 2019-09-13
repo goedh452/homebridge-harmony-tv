@@ -54,7 +54,7 @@ function HarmonyTV(log, config)
       else
       {
         this.jsonHub = JSON.parse(hubBody);
-        this.harmonyHubs = jsonHub.hubs[0];
+        this.harmonyHubs = this.jsonHub.hubs[0];
         console.log("HarmonyTV: HUB found: " + this.harmonyHubs);
       }
     });
