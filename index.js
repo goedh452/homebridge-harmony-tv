@@ -32,6 +32,8 @@ function HarmonyTV(log, config)
 
   async function getHubs()
   {
+    console.log("apiIP: " + this.apiIP);
+    console.log("apiPort: " + this.apiPort);
     this.baseURL = "http://" + this.apiIP + ":" + this.apiPort + "/hubs";
     console.log("baseURL: " + this.baseURL);
     var hubBody = await httpRequest(this.baseURL);
@@ -72,9 +74,6 @@ function HarmonyTV(log, config)
         });
     });
   }
-
-  console.log("apiIP: " + this.apiIP);
-  console.log("apiPort: " + this.apiPort);
 
   getHubs();
   getActivities();
