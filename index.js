@@ -62,7 +62,7 @@ function HarmonyTV(log, config)
     }
   }
 
-  httpRequest(url) {
+  function httpRequest(url) {
     return new Promise((resolve, reject) => {
         request(url, (error, response, body) => {
           console.log("ERROR: " + error);
