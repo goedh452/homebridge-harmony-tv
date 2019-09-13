@@ -39,7 +39,7 @@ function HarmonyTV(log, config)
     console.log("hubBody: " + hubBody);
 
     var jsonHub = JSON.parse(hubBody);
-    this.harmonyHubs = jsonHub.hubs[0];
+    var harmonyHubs = jsonHub.hubs[0];
     console.log("HarmonyTV: HUB found: " + this.harmonyHubs);
   }
 
