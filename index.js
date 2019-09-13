@@ -2,14 +2,6 @@ var Service, Characteristic;
 var request = require("request");
 var pollingtoevent = require("polling-to-event");
 
-var baseURL;
-var activitiesURL;
-var statusURL;
-var jsonStatus;
-var harmonyStatusOff;
-var activityArray = new Array();
-var harmonyHubs;
-
 module.exports = function(homebridge) {
   Service = homebridge.hap.Service;
   Characteristic = homebridge.hap.Characteristic;
@@ -30,7 +22,24 @@ function HarmonyTV(log, config)
   this.model            = config.model            || "Harmony TV";
   this.serial           = config.serial           || "Harmony TV";
 
-  this.baseURL = "http://" + this.apiIP + ":" + this.apiPort + "/hubs";
+  var this.baseURL = "http://" + this.apiIP + ":" + this.apiPort + "/hubs";
+  var harmonyHubs = this.getHubs(this.baseURL);
+
+  console.log("HARHUBS: " + this.harmonyHubs);
+  //getActivities(this.baseURL);
+}
+
+
+HarmonyTV.prototype = {
+
+  getHubs: async function(baseURL)
+  {
+    var hubBody = await this.httpRequest(baseURL);
+    var jsonHub = JSON.parse(hubBody);
+    var harmonyHubs = jsonHub.hubs[0];
+    console.log("HarmonyTV: HUB found: " + harmonyHubs);
+    return harmonyHubs;
+  },
 
   async function getActivities()
   {
@@ -46,23 +55,6 @@ function HarmonyTV(log, config)
       this.activityArray.push(jsonAct.activities[key].slug);
     }
   }
-
-
-
-  this.getHubs(this.baseURL);
-  //getActivities(this.baseURL);
-}
-
-
-HarmonyTV.prototype = {
-
-  getHubs: async function(baseURL)
-  {
-    var hubBody = await this.httpRequest(baseURL);
-    var jsonHub = JSON.parse(hubBody);
-    var harmonyHubs = jsonHub.hubs[0];
-    console.log("HarmonyTV: HUB found: " + harmonyHubs);
-  },
 
   httpRequest: function(url)
   {
