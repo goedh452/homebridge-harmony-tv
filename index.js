@@ -75,7 +75,7 @@ function HarmonyTV(log, config)
   }
 
   getHubs(this.baseURL);
-  getActivities();
+  //getActivities(this.baseURL);
 }
 
 
