@@ -37,29 +37,22 @@ function HarmonyTV(log, config)
 
   var baseURL = "http://" + this.apiIP + ":" + this.apiPort + "/hubs";
 
-  var promise = new Promise(function(resolve, reject) {
-    setTimeout(function() {
-        resolve("hello world");
-    }, 1000);
-});
+  var getHubInfo = new Promise(function(resolve, reject)
+  {
+    hubBody = request(this.baseURL);
+    this.log("hubBody: " + hubBody);
+    jsonHub = JSON.parse(hubBody);
+    harmonyHubs = jsonHub.hubs[0];
+    this.log("HarmonyTV: HUB found: " + harmonyHubs);
+    resolve(harmonyHubs);
+  });
 
-  promise.then(function(harmonyHubs)
-    {
-      hubBody = request(this.baseURL);
-      this.log("hubBody: " + hubBody)
-      jsonHub = JSON.parse(hubBody);
-      harmonyHubs = jsonHub.hubs[0];
-      this.log("HarmonyTV: HUB found: " + harmonyHubs);
-      return(harmonyHubs);
-    });
+  getHubInfo.then(function(response)
+  {
+    this.log("Response: " + response);
+  });
 
-  promise.then(function(activitiesURL)
-    {
-      activitiesURL = baseURL + "/" + this.harmonyHubs + "/activities";
-      this.log("activitiesURL: " + activitiesURL);
-    });
-
-  promise.catch(function()
+  getHubInfo.catch(function()
   {
     this.log("An error has occured");
   });
