@@ -32,14 +32,16 @@ function HarmonyTV(log, config)
   this.model            = config.model            || "Harmony TV";
   this.serial           = config.serial           || "Harmony TV";
 
+  var that = this;
+
   getHubs();
   //this.getActivities(callback);
 
-  this.baseURL = "http://" + this.apiIP + ":" + this.apiPort + "/hubs";
+  that.baseURL = "http://" + this.apiIP + ":" + this.apiPort + "/hubs";
 
   function getHubs()
   {
-    this.httpRequest(this.baseURL, function(error, response, hubBody)
+    that.httpRequest(that.baseURL, function(error, response, hubBody)
     {
       if (error)
       {
@@ -62,6 +64,8 @@ HarmonyTV.prototype = {
   httpRequest: function(url, callback)
   {
     var callbackMethod = callback;
+
+    console.log("URL: " + url);
 
     request({
         url: url,
