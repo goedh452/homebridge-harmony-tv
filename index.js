@@ -46,7 +46,7 @@ HarmonyTV.prototype = {
     this.activitiesURL = this.baseURL + "/" + this.harmonyHubs + "/activities";
     console.log("activitiesURL: " + this.activitiesURL);
 
-    var activityBody = await httpRequest(this.activitiesURL);
+    var activityBody = await this.httpRequest(this.activitiesURL);
 
     var jsonAct = JSON.parse(activityBody);
     for (var key = 0; key < jsonAct.activities.length; key++)
@@ -54,7 +54,7 @@ HarmonyTV.prototype = {
       console.log("HarmonyTV: Activity found: " + jsonAct.activities[key].slug);
       this.activityArray.push(jsonAct.activities[key].slug);
     }
-  }
+  },
 
   httpRequest: function(url)
   {
