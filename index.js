@@ -38,12 +38,10 @@ function HarmonyTV(log, config)
   //this.getActivities();
 
   this.baseURL = "http://" + this.apiIP + ":" + this.apiPort + "/hubs";
-  this.hubBody = request(this.baseURL);
-  this.log("hubBody: " + hubBody);
 
   var getHubInfo = new Promise(function(resolve, reject)
   {
-    reso("SUCCES!");
+    resolve("SUCCES!");
   });
 
   getHubInfo.then(function(response)
