@@ -57,7 +57,7 @@ function HarmonyTV(log, config)
     .catch(function(error)
     {
       console.log("An error has occured: " + error);
-    }
+    });
   });
 }
 
