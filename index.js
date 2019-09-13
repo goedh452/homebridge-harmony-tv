@@ -41,7 +41,7 @@ HarmonyTV.prototype = {
     return harmonyHubs;
   },
 
-  async function getActivities()
+  getActivities: async function()
   {
     this.activitiesURL = this.baseURL + "/" + this.harmonyHubs + "/activities";
     console.log("activitiesURL: " + this.activitiesURL);
