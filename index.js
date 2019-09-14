@@ -68,7 +68,7 @@ HarmonyTV.prototype = {
       console.log("statusURL: " + this.statusURL);
       var statusemitter = pollingtoevent(function(done)
       {
-        that.httpRequest(statusURL, "", "GET", function(error, response, body)
+        that.httpRequest(this.statusURL, "", "GET", function(error, response, body)
         {
           if (error)
           {
