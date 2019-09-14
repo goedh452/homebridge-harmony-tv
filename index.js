@@ -6,7 +6,7 @@ var pollingtoevent = require("polling-to-event");
 var harmonyHubs;
 var baseURL;
 var activitiesURL;
-var activitiesArray = new Array();
+var activityArray = new Array();
 
 module.exports = function(homebridge) {
   Service = homebridge.hap.Service;
@@ -47,13 +47,10 @@ HarmonyTV.prototype = {
     console.log("HarmonyTV: HUB found: " + this.harmonyHubs);
 
     this.activitiesURL = this.baseURL + "/" + this.harmonyHubs + "/activities";
-    console.log(this.activitiesURL);
-
     var actResponse = syncrequest("GET", this.activitiesURL, { timeout: this.timeout });
     console.log("jsonAct: " + actResponse.getBody('utf8'));
 
     var jsonAct = JSON.parse(actResponse.getBody('utf8'));
-
     for (var key = 0; key < jsonAct.activities.length; key++)
     {
       console.log("HarmonyTV: Activity found: " + jsonAct.activities[key].slug);
