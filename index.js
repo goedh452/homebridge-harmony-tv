@@ -140,7 +140,7 @@ HarmonyTV.prototype = {
       else
       { powerOn = true; }
 
-			callback(error, state);
+			callback(error, powerOn);
 		}
 	}.bind(this));
   },
