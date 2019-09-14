@@ -72,11 +72,11 @@ HarmonyTV.prototype = {
         {
           if (error)
           {
-            this.log("HarmonyTV get status function failed: %s", error.message);
+            console.log("HarmonyTV get status function failed: %s", error.message);
               try
               { done(new Error("Network failure")); }
               catch (err)
-              { that.log(err.message); }
+              { console.log(err.message); }
             }
             else
             { done(null, body); }
