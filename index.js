@@ -38,7 +38,7 @@ HarmonyTV.prototype = {
   {
     this.baseURL = "http://" + this.apiIP + ":" + this.apiPort + "/hubs";
 
-    this.syncRequest(this.baseURL, "", "GET", function(error, response, hubBody)
+    this.syncRequest("GET", this.baseURL, function(error, response, hubBody)
     {
       if (error)
       {
@@ -54,18 +54,15 @@ HarmonyTV.prototype = {
     }.bind(this));
   },
 
-  syncRequest: function(url, body, method, callback)
+  syncRequest: function(method, url, callback)
   {
     var callbackMethod = callback;
 
     console.log("URL: " + url);
 
-    syncrequest({
-        url: url,
+    syncrequest(method, url, {
         body: body,
-        method: method,
-        timeout: this.timeout,
-        rejectUnauthorized: false
+        timeout: this.timeout
       },
       function(error, response, responseBody)
       {
@@ -73,7 +70,7 @@ HarmonyTV.prototype = {
         {
           callbackMethod(error, response, responseBody);
         }
-      })
+      });
   },
 
   getPowerState: function(callback)
