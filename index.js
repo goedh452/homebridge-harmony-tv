@@ -125,7 +125,22 @@ HarmonyTV.prototype = {
 
   getPowerState: function(callback)
   {
-    // Status is handled by polling
+		this.httpRequest(this.statusUrl, "", "GET", function (error, response, statusBody)
+    { if (error) { console.log("HarmonyTV: get state function failed %s", error.message); }
+		else
+		{
+      var powerOn = false;
+      var jsonStatus  = JSON.parse(statusBody);
+      var harmonyStatusOff = jsonStatus.off;
+
+      if ( harmonyStatusOff === true  )
+      { powerOn = false; }
+      else
+      { powerOn = true; }
+
+			callback(error, state);
+		}
+	}.bind(this));
   },
 
   setPowerState: function(callback)
