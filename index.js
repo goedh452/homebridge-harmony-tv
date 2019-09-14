@@ -123,11 +123,11 @@ HarmonyTV.prototype = {
       });
   },
 
-  getPowerState: function(callback)
+  getCurrentState: function(callback)
   {
-    this.statusURL = this.baseURL + "/" + this.harmonyHubs + "/status";
+     var currentStateURL = this.baseURL + "/" + this.harmonyHubs + "/status";
 
-		this.httpRequest(this.statusUrl, "", "GET", function (error, response, statusBody)
+		this.httpRequest(currentStateURL, "", "GET", function (error, response, statusBody)
     { if (error) { console.log("HarmonyTV: get state function failed %s", error.message); }
 		else
 		{
@@ -166,7 +166,7 @@ HarmonyTV.prototype = {
 
     this.tvService
       .getCharacteristic(Characteristic.Active)
-      .on('get', this.getPowerState.bind(this))
+      .on('get', this.getCurrentState.bind(this))
       .on('set', this.setPowerState.bind(this));
 
     return [this.tvService, this.informationService];
