@@ -6,7 +6,6 @@ var pollingtoevent = require("polling-to-event");
 var harmonyHubs;
 var baseURL;
 var activitiesURL;
-var statusURL;
 
 module.exports = function(homebridge) {
   Service = homebridge.hap.Service;
@@ -64,10 +63,10 @@ HarmonyTV.prototype = {
     var that = this;
     if (this.apiIP && this.apiPort)
     {
-      this.statusURL = this.baseURL + "/" + this.harmonyHubs + "/status";
+      var statusURL = this.baseURL + "/" + this.harmonyHubs + "/status";
       var statusemitter = pollingtoevent(function(done)
       {
-        that.httpRequest(that.statusURL, "", "GET", function(error, response, body)
+        that.httpRequest(statusURL, "", "GET", function(error, response, body)
         {
           if (error)
           {
@@ -87,8 +86,8 @@ HarmonyTV.prototype = {
 
         statusemitter.on("statuspoll", function(statusBody)
         {
-          var powerOn = false;
-          var jsonStatus  = JSON.parse(statusBody);
+          var powerOn;
+          var jsonStatus = JSON.parse(statusBody);
           var harmonyStatusOff = jsonStatus.off;
 
           if ( harmonyStatusOff === true  )
@@ -96,8 +95,7 @@ HarmonyTV.prototype = {
           else
           { powerOn = true; }
 
-          console.log("HarmonyTV: State is currently: " + powerOn);
-
+          //console.log("HarmonyTV: State is currently: " + powerOn);
           that.tvService.getCharacteristic(Characteristic.Active).updateValue(powerOn);
         });
       }
@@ -168,6 +166,8 @@ HarmonyTV.prototype = {
       .getCharacteristic(Characteristic.Active)
       .on('get', this.getCurrentState.bind(this))
       .on('set', this.setPowerState.bind(this));
+
+    this.tvService.addLinkedService("Test");
 
     return [this.tvService, this.informationService];
   }
