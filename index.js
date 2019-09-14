@@ -48,8 +48,6 @@ HarmonyTV.prototype = {
 
     this.activitiesURL = this.baseURL + "/" + this.harmonyHubs + "/activities";
     var actResponse = syncrequest("GET", this.activitiesURL, { timeout: this.timeout });
-    console.log("jsonAct: " + actResponse.getBody('utf8'));
-
     var jsonAct = JSON.parse(actResponse.getBody('utf8'));
     for (var key = 0; key < jsonAct.activities.length; key++)
     {
