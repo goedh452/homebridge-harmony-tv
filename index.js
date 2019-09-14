@@ -38,39 +38,17 @@ HarmonyTV.prototype = {
   {
     this.baseURL = "http://" + this.apiIP + ":" + this.apiPort + "/hubs";
 
-    this.syncRequest("GET", this.baseURL, "", function(error, response, hubBody)
+    syncrequest("GET", this.baseURL, { timeout: this.timeout },
+    function(error, response, hubBody)
     {
-      if (error)
-      {
-        this.log("Get hub failed: %s", error.message);
-        callback(error);
-      }
+      if (error) { console.log("Get hubs failed: %s", error.message); }
       else
       {
         var jsonHub = JSON.parse(hubBody);
         this.harmonyHubs = jsonHub.hubs[0];
         console.log("HarmonyTV: HUB found: " + this.harmonyHubs);
       }
-    }.bind(this));
-  },
-
-  syncRequest: function(method, url, body, callback)
-  {
-    var callbackMethod = callback;
-
-    console.log("URL: " + url);
-
-    syncrequest(method, url, {
-        body: body,
-        timeout: this.timeout
-      },
-      function(error, response, responseBody)
-      {
-        if (callbackMethod)
-        {
-          callbackMethod(error, response, responseBody);
-        }
-      });
+    });
   },
 
   getPowerState: function(callback)
