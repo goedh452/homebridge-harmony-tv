@@ -30,6 +30,8 @@ function HarmonyTV(log, config)
 
   this.getHubsInformation();
 
+  console.log("HUB HIER: " + this.harmonyHubs);
+
 
   //getActivities(this.baseURL);
 }
