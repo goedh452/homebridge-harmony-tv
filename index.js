@@ -48,8 +48,13 @@ HarmonyTV.prototype = {
     var activityArray = [];
     for (var key = 0; key < jsonAct.activities.length; key++)
     {
-      console.log("HarmonyTV: Activity found: " + jsonAct.activities[key].slug);
-      activityArray.push(jsonAct.activities[key].slug);
+      if ( jsonAct.activities[key].id) == -1 )
+      { console.log("HarmonyTV:Activity poweroff -> do not add as input"); }
+      else
+      {
+        console.log("HarmonyTV: Activity found: " + jsonAct.activities[key].slug);
+        activityArray.push(jsonAct.activities[key].slug);
+      }
     }
   },
 
