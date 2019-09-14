@@ -50,7 +50,7 @@ HarmonyTV.prototype = {
     console.log(this.activitiesURL);
 
     var actResponse = syncrequest("GET", this.activitiesURL, { timeout: this.timeout });
-    console.log("jsonAct: " + jsonActn.getBody('utf8'));
+    console.log("jsonAct: " + jsonAct.getBody('utf8'));
 
     var jsonAct = JSON.parse(actResponse.getBody('utf8'));
 
