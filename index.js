@@ -6,6 +6,7 @@ var pollingtoevent = require("polling-to-event");
 var harmonyHubs;
 var baseURL;
 var activitiesURL;
+var statusURL;
 
 module.exports = function(homebridge) {
   Service = homebridge.hap.Service;
@@ -27,14 +28,15 @@ function HarmonyTV(log, config)
   this.model            = config.model            || "Harmony TV";
   this.serial           = config.serial           || "Harmony TV";
 
-  this.getHubsInformation();
+  this.initializeService();
 }
 
 
 HarmonyTV.prototype = {
 
-  getHubsInformation: function()
+  initializeService: function()
   {
+    // Get Hubs
     this.baseURL = "http://" + this.apiIP + ":" + this.apiPort + "/hubs";
 
     var hubResponse = syncrequest("GET", this.baseURL, { timeout: this.timeout });
@@ -42,20 +44,87 @@ HarmonyTV.prototype = {
     this.harmonyHubs = jsonHub.hubs[0];
     console.log("HarmonyTV: HUB found: " + this.harmonyHubs);
 
+    // Get activities
     this.activitiesURL = this.baseURL + "/" + this.harmonyHubs + "/activities";
     var actResponse = syncrequest("GET", this.activitiesURL, { timeout: this.timeout });
     var jsonAct = JSON.parse(actResponse.getBody('utf8'));
     var activityArray = [];
     for (var key = 0; key < jsonAct.activities.length; key++)
     {
-      if ( jsonAct.activities[key].id == "-1" ) 
-      { console.log("HarmonyTV:Activity poweroff -> do not add as input"); }
+      if ( jsonAct.activities[key].id == "-1" )
+      { console.log("HarmonyTV: Activity found: poweroff -> do not add as input"); }
       else
       {
         console.log("HarmonyTV: Activity found: " + jsonAct.activities[key].slug);
         activityArray.push(jsonAct.activities[key].slug);
       }
     }
+
+    // Start polling
+    if (this.apiIP && this.apiPort)
+    {
+      this.statusURL = this.baseURL + "/" + this.harmonyHubs + "/status";
+      console.log("statusURL: " + this.statusURL);
+      var statusemitter = pollingtoevent(function(done)
+      {
+        this.httpRequest(statusURL, "", "GET", function(error, response, body)
+        {
+          if (error)
+          {
+            this.log("HarmonyTV get status function failed: %s", error.message);
+              try
+              { done(new Error("Network failure")); }
+              catch (err)
+              { that.log(err.message); }
+            }
+            else
+            { done(null, body); }
+          })
+        }, {
+          interval: this.pollingInterval,
+          eventName: "statuspoll"
+        });
+
+        statusemitter.on("statuspoll", function(statusBody)
+        {
+          console.log("responseBody: " + statusBody);
+          var powerOn = false;
+          var jsonStatus  = JSON.parse(statusBody);
+          var harmonyStatusOff = jsonStatus.off;
+
+          console.log("harmonyStatusOff: " + harmonyStatusOff);
+
+          if ( harmonyStatusOff === true  )
+          { powerOn = false; }
+          else
+          { powerOn = true; }
+
+          console.log("HarmonyTV: State is currently: " + powerOn);
+
+          this.tvService.getCharacteristic(Characteristic.Active).updateValue(powerOn);
+        });
+      }
+  },
+
+  httpRequest: function(url, body, method, callback)
+  {
+    var callbackMethod = callback;
+
+    request({
+        url: url,
+        body: body,
+        method: method,
+        timeout: this.timeout,
+        rejectUnauthorized: false
+      },
+      function(error, response, responseBody)
+      {
+        if (callbackMethod)
+        {
+          callbackMethod(error, response, responseBody);
+        }
+
+      })
   },
 
   getPowerState: function(callback)
