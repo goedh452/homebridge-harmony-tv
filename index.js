@@ -65,10 +65,9 @@ HarmonyTV.prototype = {
     if (this.apiIP && this.apiPort)
     {
       this.statusURL = this.baseURL + "/" + this.harmonyHubs + "/status";
-      console.log("statusURL: " + this.statusURL);
       var statusemitter = pollingtoevent(function(done)
       {
-        that.httpRequest(this.statusURL, "", "GET", function(error, response, body)
+        that.httpRequest(that.statusURL, "", "GET", function(error, response, body)
         {
           if (error)
           {
@@ -82,7 +81,7 @@ HarmonyTV.prototype = {
             { done(null, body); }
           })
         }, {
-          interval: this.pollingInterval,
+          interval: that.pollingInterval,
           eventName: "statuspoll"
         });
 
