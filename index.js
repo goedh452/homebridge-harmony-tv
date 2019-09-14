@@ -79,7 +79,7 @@ HarmonyTV.prototype = {
             }
             else
             { done(null, body); }
-          })
+          }.bind(this))
         }, {
           interval: this.pollingInterval,
           eventName: "statuspoll"
