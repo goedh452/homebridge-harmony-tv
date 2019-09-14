@@ -39,7 +39,7 @@ HarmonyTV.prototype = {
     this.baseURL = "http://" + this.apiIP + ":" + this.apiPort + "/hubs";
 
     var hubResponse = syncrequest("GET", this.baseURL, { timeout: this.timeout });
-    console.log(hubResponse.getBody());
+    console.log(hubResponse.getBody('utf8'));
 
     var jsonHub = JSON.parse(hubResponse);
     this.harmonyHubs = jsonHub.hubs[0];
