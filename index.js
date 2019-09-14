@@ -87,7 +87,6 @@ HarmonyTV.prototype = {
 
         statusemitter.on("statuspoll", function(statusBody)
         {
-          console.log("responseBody: " + statusBody);
           var powerOn = false;
           var jsonStatus  = JSON.parse(statusBody);
           var harmonyStatusOff = jsonStatus.off;
@@ -121,8 +120,7 @@ HarmonyTV.prototype = {
         {
           callbackMethod(error, response, responseBody);
         }
-
-      })
+      });
   },
 
   getPowerState: function(callback)
@@ -137,7 +135,7 @@ HarmonyTV.prototype = {
 
   getServices: function()
   {
-
+    console.log("START")
     this.informationService = new Service.AccessoryInformation();
     this.informationService
       .setCharacteristic(Characteristic.Manufacturer, this.manufacturer)
