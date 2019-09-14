@@ -92,8 +92,6 @@ HarmonyTV.prototype = {
           var jsonStatus  = JSON.parse(statusBody);
           var harmonyStatusOff = jsonStatus.off;
 
-          console.log("harmonyStatusOff: " + harmonyStatusOff);
-
           if ( harmonyStatusOff === true  )
           { powerOn = false; }
           else
@@ -101,7 +99,7 @@ HarmonyTV.prototype = {
 
           console.log("HarmonyTV: State is currently: " + powerOn);
 
-          this.tvService.getCharacteristic(Characteristic.Active).updateValue(powerOn);
+          that.tvService.getCharacteristic(Characteristic.Active).updateValue(powerOn);
         });
       }
   },
