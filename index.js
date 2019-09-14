@@ -41,6 +41,10 @@ HarmonyTV.prototype = {
     syncrequest("GET", this.baseURL, { timeout: this.timeout },
     function(error, response, hubBody)
     {
+      console.log("ERROR: " + error);
+      console.log("RESPONSE: " + response);
+      console.log("BODY: " + hubBody);
+
       if (error) { console.log("Get hubs failed: %s", error.message); }
       else
       {
