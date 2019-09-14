@@ -4,6 +4,9 @@ var syncrequest = require("sync-request");
 var pollingtoevent = require("polling-to-event");
 
 var harmonyHubs;
+var baseURL;
+var activitiesURL;
+var activitiesArray = new Array();
 
 module.exports = function(homebridge) {
   Service = homebridge.hap.Service;
@@ -25,7 +28,7 @@ function HarmonyTV(log, config)
   this.model            = config.model            || "Harmony TV";
   this.serial           = config.serial           || "Harmony TV";
 
-  this.getHubs();
+  this.getHubsInformation();
 
 
   //getActivities(this.baseURL);
@@ -34,7 +37,7 @@ function HarmonyTV(log, config)
 
 HarmonyTV.prototype = {
 
-  getHubs: function()
+  getHubsInformation: function()
   {
     this.baseURL = "http://" + this.apiIP + ":" + this.apiPort + "/hubs";
 
@@ -42,6 +45,20 @@ HarmonyTV.prototype = {
     var jsonHub = JSON.parse(hubResponse.getBody('utf8'));
     this.harmonyHubs = jsonHub.hubs[0];
     console.log("HarmonyTV: HUB found: " + this.harmonyHubs);
+
+    this.activitiesURL = this.baseURL + "/" + this.harmonyHubs + "/activities";
+    console.log(this.activitiesURL);
+
+    var actResponse = syncrequest("GET", this.activitiesURL, { timeout: this.timeout });
+    console.log("jsonAct: " + jsonActn.getBody('utf8'));
+
+    var jsonAct = JSON.parse(actResponse.getBody('utf8'));
+
+    for (var key = 0; key < jsonAct.activities.length; key++)
+    {
+      console.log("HarmonyTV: Activity found: " + jsonAct.activities[key].slug);
+      activityArray.push(jsonAct.activities[key].slug);
+    }
   },
 
   getPowerState: function(callback)
