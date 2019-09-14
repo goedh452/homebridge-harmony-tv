@@ -6,7 +6,6 @@ var pollingtoevent = require("polling-to-event");
 var harmonyHubs;
 var baseURL;
 var activitiesURL;
-var activityArray = [];
 
 module.exports = function(homebridge) {
   Service = homebridge.hap.Service;
@@ -29,11 +28,6 @@ function HarmonyTV(log, config)
   this.serial           = config.serial           || "Harmony TV";
 
   this.getHubsInformation();
-
-  console.log("HUB HIER: " + this.harmonyHubs);
-
-
-  //getActivities(this.baseURL);
 }
 
 
@@ -51,10 +45,11 @@ HarmonyTV.prototype = {
     this.activitiesURL = this.baseURL + "/" + this.harmonyHubs + "/activities";
     var actResponse = syncrequest("GET", this.activitiesURL, { timeout: this.timeout });
     var jsonAct = JSON.parse(actResponse.getBody('utf8'));
+    var activityArray = [];
     for (var key = 0; key < jsonAct.activities.length; key++)
     {
       console.log("HarmonyTV: Activity found: " + jsonAct.activities[key].slug);
-      //this.activityArray.push(jsonAct.activities[key].slug);
+      activityArray.push(jsonAct.activities[key].slug);
     }
   },
 
