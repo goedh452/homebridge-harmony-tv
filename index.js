@@ -1,6 +1,9 @@
 var Service, Characteristic;
 var request = require("request");
+var syncrequest = require("sync-request");
 var pollingtoevent = require("polling-to-event");
+
+var harmonyHubs;
 
 module.exports = function(homebridge) {
   Service = homebridge.hap.Service;
@@ -22,8 +25,7 @@ function HarmonyTV(log, config)
   this.model            = config.model            || "Harmony TV";
   this.serial           = config.serial           || "Harmony TV";
 
-  var baseURL = "http://" + this.apiIP + ":" + this.apiPort + "/hubs";
-  this.getHubs(this.baseURL, function(harmonyHubs){ console.log("HARHUBS: " + this.harmonyHubs);});
+  this.getHubs();
 
 
   //getActivities(this.baseURL);
@@ -32,46 +34,46 @@ function HarmonyTV(log, config)
 
 HarmonyTV.prototype = {
 
-  getHubs: async function(baseURL, callback)
+  getHubs: function()
   {
-    console.log("URL HIER: " + baseURL);
-    var hubBody = await this.httpRequest(baseURL);
-    var jsonHub = JSON.parse(hubBody);
-    var harmonyHubs = jsonHub.hubs[0];
-    console.log("HarmonyTV: HUB found: " + harmonyHubs);
-    return calback(harmonyHubs);
-  },
+    this.baseURL = "http://" + this.apiIP + ":" + this.apiPort + "/hubs";
 
-  getActivities: async function()
-  {
-    this.activitiesURL = this.baseURL + "/" + this.harmonyHubs + "/activities";
-    console.log("activitiesURL: " + this.activitiesURL);
-
-    var activityBody = await this.httpRequest(this.activitiesURL);
-
-    var jsonAct = JSON.parse(activityBody);
-    for (var key = 0; key < jsonAct.activities.length; key++)
+    this.syncRequest(this.baseURL, function(error, response, hubBody)
     {
-      console.log("HarmonyTV: Activity found: " + jsonAct.activities[key].slug);
-      this.activityArray.push(jsonAct.activities[key].slug);
-    }
+      if (error)
+      {
+        this.log("Get hub failed: %s", error.message);
+        callback(error);
+      }
+      else
+      {
+        var jsonHub = JSON.parse(hubBody);
+        this.harmonyHubs = jsonHub.hubs[0];
+        console.log("HarmonyTV: HUB found: " + this.harmonyHubs);
+      }
+    }.bind(this));
   },
 
-  httpRequest: function(url)
+  syncRequest: function(url, callback)
   {
-    return new Promise((resolve, reject) => {
-        request(url, (error, response, body) => {
-          console.log("ERROR: " + error);
-          console.log("RESPONSE: " + response);
-          console.log("BODY: " + body);
+    var callbackMethod = callback;
 
-            if (error) reject(error);
-            if (response.statusCode != 200) {
-                reject('Invalid status code <' + response.statusCode + '>');
-            }
-            resolve(body);
-        });
-    });
+    console.log("URL: " + url);
+
+    syncrequest({
+        url: url,
+        body: body,
+        method: method,
+        timeout: this.timeout,
+        rejectUnauthorized: false
+      },
+      function(error, response, responseBody)
+      {
+        if (callbackMethod)
+        {
+          callbackMethod(error, response, responseBody);
+        }
+      })
   },
 
   getPowerState: function(callback)
