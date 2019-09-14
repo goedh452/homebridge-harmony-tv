@@ -28,6 +28,22 @@ function HarmonyTV(log, config)
   this.serial           = config.serial           || "Harmony TV";
 
   this.initializeService();
+
+  var tmpInput = new Service.InputSource(100, "inputSource");
+
+  tmpInput
+  .setCharacteristic(Characteristic.Identifier, 1)
+  .setCharacteristic(Characteristic.ConfiguredName, "Test")
+  .setCharacteristic(Characteristic.IsConfigured, Characteristic.IsConfigured.CONFIGURED)
+  .setCharacteristic(Characteristic.InputSourceType, Characteristic.InputSourceType.APPLICATION)
+  .setCharacteristic(Characteristic.CurrentVisibilityState, Characteristic.CurrentVisibilityState.SHOWN);
+
+  tmpInput
+  .getCharacteristic(Characteristic.ConfiguredName)
+  .on('set', this.setPowerState.bind(this));
+
+  this.tvService.addLinkedService(tmpInput);
+
 }
 
 
@@ -166,8 +182,6 @@ HarmonyTV.prototype = {
       .getCharacteristic(Characteristic.Active)
       .on('get', this.getCurrentState.bind(this))
       .on('set', this.setPowerState.bind(this));
-
-    this.tvService.addLinkedService("Test");
 
     return [this.tvService, this.informationService];
   }
