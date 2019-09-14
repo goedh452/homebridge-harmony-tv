@@ -38,7 +38,7 @@ HarmonyTV.prototype = {
   {
     this.baseURL = "http://" + this.apiIP + ":" + this.apiPort + "/hubs";
 
-    this.syncRequest("GET", this.baseURL, function(error, response, hubBody)
+    this.syncRequest("GET", this.baseURL, "", function(error, response, hubBody)
     {
       if (error)
       {
@@ -54,7 +54,7 @@ HarmonyTV.prototype = {
     }.bind(this));
   },
 
-  syncRequest: function(method, url, callback)
+  syncRequest: function(method, url, body, callback)
   {
     var callbackMethod = callback;
 
