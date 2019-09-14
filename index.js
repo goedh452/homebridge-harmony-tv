@@ -6,7 +6,7 @@ var pollingtoevent = require("polling-to-event");
 var harmonyHubs;
 var baseURL;
 var activitiesURL;
-var activityArray = new Array();
+var activityArray = [];
 
 module.exports = function(homebridge) {
   Service = homebridge.hap.Service;
