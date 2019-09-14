@@ -48,7 +48,7 @@ HarmonyTV.prototype = {
     var activityArray = [];
     for (var key = 0; key < jsonAct.activities.length; key++)
     {
-      if ( jsonAct.activities[key].id) == -1 )
+      if ( jsonAct.activities[key].id) == "-1" ) 
       { console.log("HarmonyTV:Activity poweroff -> do not add as input"); }
       else
       {
