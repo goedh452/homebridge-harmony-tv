@@ -125,8 +125,7 @@ HarmonyTV.prototype = {
 
   getPowerState: function(callback)
   {
-    console.log("baseURL: " + this.baseURL);
-    console.log("harmonyHubs: " + this.harmonyHubs);
+    this.statusURL = this.baseURL + "/" + this.harmonyHubs + "/status";
 
 		this.httpRequest(this.statusUrl, "", "GET", function (error, response, statusBody)
     { if (error) { console.log("HarmonyTV: get state function failed %s", error.message); }
