@@ -57,7 +57,7 @@ HarmonyTV.prototype = {
     for (var key = 0; key < jsonAct.activities.length; key++)
     {
       console.log("HarmonyTV: Activity found: " + jsonAct.activities[key].slug);
-      activityArray.push(jsonAct.activities[key].slug);
+      this.activityArray.push(jsonAct.activities[key].slug);
     }
   },
 
