@@ -120,9 +120,10 @@ HarmonyTV.prototype = {
   setActiveIdentifier: function(identifier, callback)
   {
     console.log("HarmonyTV: Change input to " + identifier);
-    var URL = "http://192.168.1.117:8282/harmonyhub/hubs/hub-woonkamer/activities/tv-kijken"
+    var inputURL = this.baseURL + "/" + this.harmonyHubs + "/activities/" + "tv-kijken";
+    console.log("inputURL: " + inputURL);
 
-    this.httpPostRequest(URL, "on", function(error, response, responseBody)
+    this.httpPostRequest(inputURL, "on", function(error, response, responseBody)
     {
       if (error)
       {
@@ -130,7 +131,7 @@ HarmonyTV.prototype = {
       }
       else
       {
-          console.log("RESPONSE: " + responseBody);
+        //console.log("RESPONSE: " + responseBody);
       }
     });
     callback();
@@ -164,7 +165,6 @@ HarmonyTV.prototype = {
 
         statusemitter.on("statuspoll", function(statusBody)
         {
-          var powerOn;
           var currentActivityId;
           var currentActivityLabel;
           var jsonStatus = JSON.parse(statusBody);
@@ -172,17 +172,15 @@ HarmonyTV.prototype = {
 
           if ( harmonyStatusOff === false  )
           {
-            powerOn = true;
             currentActivityId    = jsonStatus.current_activity.id;
             currentActivityLabel = jsonStatus.current_activity.label;
-            console.log("HarmonyTV: Current activity is " + currentActivityLabel);
+            //console.log("HarmonyTV: Current activity is " + currentActivityLabel);
             that.tvService.getCharacteristic(Characteristic.Active).updateValue(true);
             that.tvService.getCharacteristic(Characteristic.ActiveIdentifier).updateValue(currentActivityId);
           }
           else
           {
-            powerOn = false;
-            console.log("HarmonyTV: State is currently Off");
+            //console.log("HarmonyTV: State is currently Off");
             that.tvService.getCharacteristic(Characteristic.Active).updateValue(false);
           }
         });
@@ -212,10 +210,6 @@ HarmonyTV.prototype = {
   httpPostRequest: function(url, body, callback)
   {
     var callbackMethod = callback;
-
-    console.log("URL: " + url);
-    console.log("BODY: " + body)
-
     request.post({
         url: url,
         body: body,
