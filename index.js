@@ -194,10 +194,6 @@ HarmonyTV.prototype = {
       if (error)
       {
         console.log("HarmonyTV get status function failed: %s", error.message);
-        try
-        { done(new Error("Network failure")); }
-        catch (err)
-        { console.log(err.message); }
       }
       else
       {
@@ -212,15 +208,17 @@ HarmonyTV.prototype = {
           powerOn = true;
           currentActivityId    = jsonStatus.current_activity.id;
           currentActivityLabel = jsonStatus.current_activity.label;
-          console.log("HarmonyTV: Current activity is " + currentActivityLabel);
-          this.tvService.getCharacteristic(Characteristic.Active).updateValue(true);
-          this.tvService.getCharacteristic(Characteristic.ActiveIdentifier).updateValue(currentActivityId);
+          console.log("HarmonyTV: getCurrentState - Current activity is " + currentActivityLabel);
+          //this.tvService.getCharacteristic(Characteristic.Active).updateValue(true);
+          //this.tvService.getCharacteristic(Characteristic.ActiveIdentifier).updateValue(currentActivityId);
+          callback(error, true);
         }
         else
         {
           powerOn = false;
-          console.log("HarmonyTV: State is currently Off");
+          console.log("HarmonyTV: getCurrentState - State is currently Off");
           this.tvService.getCharacteristic(Characteristic.Active).updateValue(false);
+          callback(error, false);
         }
       }
     }.bind(this));
