@@ -189,7 +189,7 @@ HarmonyTV.prototype = {
   getCurrentState: function(callback)
   {
     var statusURL = this.baseURL + "/" + this.harmonyHubs + "/status";
-    this.httpRequest(statusURL, "", "GET", function(error, response, body)
+    this.httpRequest(statusURL, "", "GET", function(error, response, statusBody)
     {
       if (error)
       {
