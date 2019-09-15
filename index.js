@@ -105,7 +105,7 @@ HarmonyTV.prototype = {
       { console.log("HarmonyTV: Activity found: poweroff -> do not add as input"); }
       else
       {
-        console.log("HarmonyTV: Activity found: " + jsonAct.activities[key].label;
+        console.log("HarmonyTV: Activity found: " + jsonAct.activities[key].label);
         inputID    = jsonAct.activities[key].id;
         inputLabel = jsonAct.activities[key].label;
         this.addInputServices(inputID, inputLabel);
