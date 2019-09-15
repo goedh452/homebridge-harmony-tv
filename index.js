@@ -30,14 +30,44 @@ function HarmonyTV(log, config)
   this.harmonyHubs;
 
   // Initialize service
-  this.initializeService();
+  this.initInformationService();
+  this.initTVService();
+  this.initHubInfo();
 
 }
 
 
 HarmonyTV.prototype = {
 
-  initializeService: function()
+  initInformationService : function()
+  {
+    this.informationService = new Service.AccessoryInformation();
+    this.informationService
+      .setCharacteristic(Characteristic.Manufacturer, this.manufacturer)
+      .setCharacteristic(Characteristic.Model, this.model)
+      .setCharacteristic(Characteristic.SerialNumber, this.serial);
+
+    this.enabledServices.pust(informationService);
+
+  },
+
+  initTVService: function()
+  {
+    this.tvService = new Service.Television(this.name);
+
+    this.tvService
+      .setCharacteristic(Characteristic.ConfiguredName, this.name)
+      .setCharacteristic(Characteristic.SleepDiscoveryMode, Characteristic.SleepDiscoveryMode.ALWAYS_DISCOVERABLE);
+
+    this.tvService
+      .getCharacteristic(Characteristic.Active)
+      .on('get', this.getCurrentState.bind(this))
+      .on('set', this.setPowerState.bind(this));
+
+    this.enabledServices.pust(tvService);
+  }
+
+  initHubInfo: function()
   {
     // Get Hubs
     this.baseURL = "http://" + this.apiIP + ":" + this.apiPort + "/hubs";
@@ -52,7 +82,7 @@ HarmonyTV.prototype = {
     var actResponse = syncrequest("GET", activitiesURL, { timeout: this.timeout });
     var jsonAct = JSON.parse(actResponse.getBody('utf8'));
     var activityArray = [];
-    
+
     for (var key = 0; key < jsonAct.activities.length; key++)
     {
       if ( jsonAct.activities[key].id == "-1" )
@@ -155,39 +185,6 @@ HarmonyTV.prototype = {
 
   getServices: function()
   {
-    this.informationService = new Service.AccessoryInformation();
-    this.informationService
-      .setCharacteristic(Characteristic.Manufacturer, this.manufacturer)
-      .setCharacteristic(Characteristic.Model, this.model)
-      .setCharacteristic(Characteristic.SerialNumber, this.serial);
-
-    this.tvService = new Service.Television(this.name);
-
-    this.tvService
-      .setCharacteristic(Characteristic.ConfiguredName, this.name)
-      .setCharacteristic(Characteristic.SleepDiscoveryMode, Characteristic.SleepDiscoveryMode.ALWAYS_DISCOVERABLE);
-
-    this.tvService
-      .getCharacteristic(Characteristic.Active)
-      .on('get', this.getCurrentState.bind(this))
-      .on('set', this.setPowerState.bind(this));
-
-
-      var tmpInput = new Service.InputSource(100, "inputSource");
-
-      tmpInput
-      .setCharacteristic(Characteristic.Identifier, 1)
-      .setCharacteristic(Characteristic.ConfiguredName, "Test")
-      .setCharacteristic(Characteristic.IsConfigured, Characteristic.IsConfigured.CONFIGURED)
-      .setCharacteristic(Characteristic.InputSourceType, Characteristic.InputSourceType.APPLICATION)
-      .setCharacteristic(Characteristic.CurrentVisibilityState, Characteristic.CurrentVisibilityState.SHOWN);
-
-      tmpInput
-      .getCharacteristic(Characteristic.ConfiguredName)
-      .on('set', this.setPowerState.bind(this));
-
-      this.tvService.addLinkedService(tmpInput);
-
-    return [this.tvService, this.informationService];
+    return this.enabledServices;
   }
 };
