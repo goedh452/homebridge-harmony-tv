@@ -119,7 +119,7 @@ HarmonyTV.prototype = {
 
   setActiveIdentifier: function(indentifier, callback)
   {
-    console.log("HarmonyTV: Set input to " + identifier);
+    console.log("HarmonyTV: Change input");
     callback();
   },
 
