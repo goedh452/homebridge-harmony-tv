@@ -65,7 +65,7 @@ HarmonyTV.prototype = {
       .on('set', this.setPowerState.bind(this));
 
     this.enabledServices.pust(tvService);
-  }
+  },
 
   initHubInfo: function()
   {
