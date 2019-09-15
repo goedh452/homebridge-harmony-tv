@@ -68,18 +68,19 @@ HarmonyTV.prototype = {
     this.enabledServices.push(this.tvService);
   },
 
-  initInputServices: function()
+  addInputServices: function(name)
   {
-    let tmpInput = new Service.InputSource("HDMI1", "Test");
-            tmpInput
-                .setCharacteristic(Characteristic.Identifier, 1)
-                .setCharacteristic(Characteristic.ConfiguredName, "Test")
-                .setCharacteristic(Characteristic.IsConfigured, Characteristic.IsConfigured.CONFIGURED)
-                .setCharacteristic(Characteristic.InputSourceType, Characteristic.InputSourceType.APPLICATION)
-                .setCharacteristic(Characteristic.CurrentVisibilityState, Characteristic.CurrentVisibilityState.SHOWN);
+    let tmpInput = new Service.InputSource(name, name);
 
-            this.tvService.addLinkedService(tmpInput);
-            this.enabledServices.push(tmpInput);
+    tmpInput
+      .setCharacteristic(Characteristic.Identifier, name)
+      .setCharacteristic(Characteristic.ConfiguredName, name)
+      .setCharacteristic(Characteristic.IsConfigured, Characteristic.IsConfigured.CONFIGURED)
+      .setCharacteristic(Characteristic.InputSourceType, Characteristic.InputSourceType.APPLICATION)
+      .setCharacteristic(Characteristic.CurrentVisibilityState, Characteristic.CurrentVisibilityState.SHOWN);
+
+    this.tvService.addLinkedService(tmpInput);
+    this.enabledServices.push(tmpInput);
   },
 
   initHubInfo: function()
@@ -96,7 +97,6 @@ HarmonyTV.prototype = {
     var activitiesURL = this.baseURL + "/" + this.harmonyHubs + "/activities";
     var actResponse = syncrequest("GET", activitiesURL, { timeout: this.timeout });
     var jsonAct = JSON.parse(actResponse.getBody('utf8'));
-    var activityArray = [];
 
     for (var key = 0; key < jsonAct.activities.length; key++)
     {
@@ -105,7 +105,7 @@ HarmonyTV.prototype = {
       else
       {
         console.log("HarmonyTV: Activity found: " + jsonAct.activities[key].slug);
-        activityArray.push(jsonAct.activities[key].slug);
+        this.addInputServices(jsonAct.activities[key].slug);
       }
     }
 
