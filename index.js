@@ -120,6 +120,15 @@ HarmonyTV.prototype = {
   setActiveIdentifier: function(identifier, callback)
   {
     console.log("HarmonyTV: Change input to " + identifier);
+    var URL = "http://192.168.1.117:8282/harmonyhub/hubs/hub-woonkamer/activities/tv-kijken/command"
+
+    this.httpRequest(URL, "on", "POST")
+    {
+      if (error)
+      {
+        console.log("HarmonyTV start activity function failed: %s", error.message);
+      }
+    }
     callback();
   },
 
