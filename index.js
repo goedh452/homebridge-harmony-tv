@@ -69,6 +69,8 @@ HarmonyTV.prototype = {
 
   addInputServices: function(name)
   {
+    console.log("Adding input service: " + name);
+
     let tmpInput = new Service.InputSource(name, name);
 
     tmpInput
