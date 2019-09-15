@@ -33,6 +33,7 @@ function HarmonyTV(log, config)
   this.initInformationService();
   this.initTVService();
   this.initHubInfo();
+  this.initInputServices();
 
 }
 
@@ -65,6 +66,24 @@ HarmonyTV.prototype = {
       .on('set', this.setPowerState.bind(this));
 
     this.enabledServices.push(this.tvService);
+  },
+
+  initInputServices: function()
+  {
+    let tmpInput = new Service.InputSource("HDMI1", "Test");
+            tmpInput
+                .setCharacteristic(Characteristic.Identifier, 1)
+                .setCharacteristic(Characteristic.ConfiguredName, "Test")
+                .setCharacteristic(Characteristic.IsConfigured, Characteristic.IsConfigured.CONFIGURED)
+                .setCharacteristic(Characteristic.InputSourceType, Characteristic.InputSourceType.APPLICATION)
+                .setCharacteristic(Characteristic.CurrentVisibilityState, Characteristic.CurrentVisibilityState.SHOWN);
+
+            tmpInput
+                .getCharacteristic(Characteristic.ConfiguredName)
+                .on('set', this.setPowerState());
+
+            this.tvService.addLinkedService(tmpInput);
+            this.enabledServices.push(tmpInput);
   },
 
   initHubInfo: function()
