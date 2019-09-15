@@ -117,7 +117,7 @@ HarmonyTV.prototype = {
     }
   },
 
-  setInput: function(inputID, inputLabel)
+  setInput: function(inputID, inputLabel, callback)
   {
     console.log("HarmonyTV: Set input to " + inputLabel);
     this.tvService.getCharacteristic(Characteristic.ActiveIdentifier).updateValue(inputID);
