@@ -66,7 +66,7 @@ HarmonyTV.prototype = {
 
     this.tvService
       .getCharacteristic(Characteristic.ActiveIdentifier)
-      .on('set', this.setInputSource.bind(this))
+      .on('set', this.setActiveIdentifier.bind(this));
 
     this.enabledServices.push(this.tvService);
   },
@@ -117,7 +117,7 @@ HarmonyTV.prototype = {
     }
   },
 
-  setInputSource: function(indentifier, callback)
+  setActiveIdentifier: function(indentifier, callback)
   {
     console.log("HarmonyTV: Set input to " + identifier);
     callback();
