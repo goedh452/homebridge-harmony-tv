@@ -33,6 +33,7 @@ function HarmonyTV(log, config)
   this.initInformationService();
   this.initTVService();
   this.initHubInfo();
+  this.startPolling();
 
 }
 
@@ -111,8 +112,10 @@ HarmonyTV.prototype = {
         this.addInputServices(inputID, inputLabel);
       }
     }
+  },
 
-    // Start polling
+  startPolling: function()
+  {
     var that = this;
     if (this.apiIP && this.apiPort)
     {
@@ -148,10 +151,11 @@ HarmonyTV.prototype = {
           else
           { powerOn = true; }
 
-          //console.log("HarmonyTV: State is currently: " + powerOn);
+          console.log("HarmonyTV: State is currently: " + powerOn);
           that.tvService.getCharacteristic(Characteristic.Active).updateValue(powerOn);
         });
       }
+    }
   },
 
   httpRequest: function(url, body, method, callback)
