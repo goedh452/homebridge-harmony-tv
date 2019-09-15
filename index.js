@@ -69,7 +69,7 @@ HarmonyTV.prototype = {
 
   addInputServices: function(inputID, inputLabel)
   {
-    let tmpInput = new Service.InputSource(inputID, inputLabel);
+    let tmpInput = new Service.InputSource(inputID, inputID);
 
     tmpInput
       .setCharacteristic(Characteristic.Identifier, inputID)
