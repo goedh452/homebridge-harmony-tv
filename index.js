@@ -122,7 +122,7 @@ HarmonyTV.prototype = {
     console.log("HarmonyTV: Change input to " + identifier);
     var URL = "http://192.168.1.117:8282/harmonyhub/hubs/hub-woonkamer/activities/tv-kijken/command"
 
-    this.httpRequest(URL, "on", "POST", function(error, response, statusBody)
+    this.httpPostRequest(URL, "on", function(error, response, statusBody)
     {
       if (error)
       {
@@ -193,6 +193,26 @@ HarmonyTV.prototype = {
         url: url,
         body: body,
         method: method,
+        timeout: this.timeout,
+        rejectUnauthorized: false
+      },
+      function(error, response, responseBody)
+      {
+        if (callbackMethod)
+        {
+          callbackMethod(error, response, responseBody);
+        }
+      });
+  },
+
+  httpPostRequest: function(url, body, callback)
+  {
+    var callbackMethod = callback;
+
+    request.post({
+        url: url,
+        body: body,
+        method: "POST",
         timeout: this.timeout,
         rejectUnauthorized: false
       },
