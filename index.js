@@ -153,7 +153,7 @@ HarmonyTV.prototype = {
             currentActivityId    = jsonStatus.current_activity.id;
             currentActivityLabel = jsonStatus.current_activity.label;
             console.log("HarmonyTV: Current activity is " + currentActivityLabel);
-            this.tvService.getCharacteristic(Characteristic.ActiveIdentifier).updateValue(currentActivityId);
+            that.tvService.getCharacteristic(Characteristic.ActiveIdentifier).updateValue(currentActivityId);
           }
           else
           {
