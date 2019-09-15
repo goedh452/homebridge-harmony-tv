@@ -78,6 +78,10 @@ HarmonyTV.prototype = {
       .setCharacteristic(Characteristic.InputSourceType, Characteristic.InputSourceType.APPLICATION)
       .setCharacteristic(Characteristic.CurrentVisibilityState, Characteristic.CurrentVisibilityState.SHOWN);
 
+      tmpInput
+        .getCharacteristic(Characteristic.ConfiguredName)
+        .on('set', this.setInput(inputID, inputLabel));
+
     this.tvService.addLinkedService(tmpInput);
     this.enabledServices.push(tmpInput);
   },
@@ -112,6 +116,12 @@ HarmonyTV.prototype = {
       }
     }
   },
+
+  setInput: function(inputID, inputLabel)
+  {
+    console.log("HarmonyTV: Set input to " + inputLabel);
+    this.tvService.getCharacteristic(Characteristic.ActiveIdentifier).updateValue(inputID);
+  }
 
   startPolling: function()
   {
