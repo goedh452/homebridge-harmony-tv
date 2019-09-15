@@ -204,22 +204,11 @@ HarmonyTV.prototype = {
         var harmonyStatusOff = jsonStatus.off;
 
         if ( harmonyStatusOff === false  )
-        {
-          powerOn = true;
-          currentActivityId    = jsonStatus.current_activity.id;
-          currentActivityLabel = jsonStatus.current_activity.label;
-          console.log("HarmonyTV: getCurrentState - Current activity is " + currentActivityLabel);
-          //this.tvService.getCharacteristic(Characteristic.Active).updateValue(true);
-          //this.tvService.getCharacteristic(Characteristic.ActiveIdentifier).updateValue(currentActivityId);
-          callback(error, true);
-        }
+        { powerOn = true; }
         else
-        {
-          powerOn = false;
-          console.log("HarmonyTV: getCurrentState - State is currently Off");
-          this.tvService.getCharacteristic(Characteristic.Active).updateValue(false);
-          callback(error, false);
-        }
+        { powerOn = false; }
+
+        callback(error, powerOn);
       }
     }.bind(this));
   },
