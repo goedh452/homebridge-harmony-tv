@@ -153,6 +153,7 @@ HarmonyTV.prototype = {
             currentActivityId    = jsonStatus.current_activity.id;
             currentActivityLabel = jsonStatus.current_activity.label;
             console.log("HarmonyTV: Current activity is " + currentActivityLabel);
+            that.tvService.getCharacteristic(Characteristic.Active).updateValue(true);
             that.tvService.getCharacteristic(Characteristic.ActiveIdentifier).updateValue(currentActivityId);
           }
           else
@@ -187,24 +188,7 @@ HarmonyTV.prototype = {
 
   getCurrentState: function(callback)
   {
-     var currentStateURL = this.baseURL + "/" + this.harmonyHubs + "/status";
 
-		this.httpRequest(currentStateURL, "", "GET", function (error, response, statusBody)
-    { if (error) { console.log("HarmonyTV: get state function failed %s", error.message); }
-		else
-		{
-      var powerOn = false;
-      var jsonStatus  = JSON.parse(statusBody);
-      var harmonyStatusOff = jsonStatus.off;
-
-      if ( harmonyStatusOff === true  )
-      { powerOn = false; }
-      else
-      { powerOn = true; }
-
-			callback(error, powerOn);
-		}
-	}.bind(this));
   },
 
   setPowerState: function(callback)
