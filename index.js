@@ -80,7 +80,7 @@ HarmonyTV.prototype = {
 
       tmpInput
         .getCharacteristic(Characteristic.ConfiguredName)
-        .on('set', this.setInput(inputID, inputLabel));
+        .on('set', this.setInput(inputID, inputLabel, callback));
 
     this.tvService.addLinkedService(tmpInput);
     this.enabledServices.push(tmpInput);
@@ -121,6 +121,7 @@ HarmonyTV.prototype = {
   {
     console.log("HarmonyTV: Set input to " + inputLabel);
     this.tvService.getCharacteristic(Characteristic.ActiveIdentifier).updateValue(inputID);
+    callback();
   },
 
   startPolling: function()
