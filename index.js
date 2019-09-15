@@ -33,7 +33,6 @@ function HarmonyTV(log, config)
   this.initInformationService();
   this.initTVService();
   this.initHubInfo();
-  this.initInputServices();
 
 }
 
