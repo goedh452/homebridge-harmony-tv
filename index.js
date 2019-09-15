@@ -223,7 +223,7 @@ HarmonyTV.prototype = {
           this.tvService.getCharacteristic(Characteristic.Active).updateValue(false);
         }
       }
-    });
+    }.bind(this));
   },
 
   setPowerState: function(callback)
