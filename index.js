@@ -34,7 +34,6 @@ function HarmonyTV(log, config)
   this.initTVService();
   this.initHubInfo();
   this.startPolling();
-
 }
 
 
@@ -143,15 +142,24 @@ HarmonyTV.prototype = {
         statusemitter.on("statuspoll", function(statusBody)
         {
           var powerOn;
+          var currentActivityId;
+          var currentActivityLabel;
           var jsonStatus = JSON.parse(statusBody);
           var harmonyStatusOff = jsonStatus.off;
 
-          if ( harmonyStatusOff === true  )
-          { powerOn = false; }
+          if ( harmonyStatusOff === false  )
+          {
+            powerOn = true;
+            currentActivityId    = jsonStatus.current_activity[0].id;
+            currentActivityLabel = jsonStatus.current_activity[0].label;
+            consol.log("HarmonyTV: Current activity is " + currentActivityLabel);
+          }
           else
-          { powerOn = true; }
+          {
+            powerOn = false;
+            console.log("HarmonyTV: State is currently Off")
+          }
 
-          console.log("HarmonyTV: State is currently: " + powerOn);
           that.tvService.getCharacteristic(Characteristic.Active).updateValue(powerOn);
         });
     }
