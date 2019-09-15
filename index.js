@@ -153,14 +153,14 @@ HarmonyTV.prototype = {
             currentActivityId    = jsonStatus.current_activity.id;
             currentActivityLabel = jsonStatus.current_activity.label;
             console.log("HarmonyTV: Current activity is " + currentActivityLabel);
+            this.tvService.getCharacteristic(Characteristic.ActiveIdentifier).updateValue(currentActivityId);
           }
           else
           {
             powerOn = false;
-            console.log("HarmonyTV: State is currently Off")
+            console.log("HarmonyTV: State is currently Off");
+            that.tvService.getCharacteristic(Characteristic.Active).updateValue(false);
           }
-
-          that.tvService.getCharacteristic(Characteristic.Active).updateValue(powerOn);
         });
     }
   },
