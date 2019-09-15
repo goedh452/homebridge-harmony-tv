@@ -154,7 +154,6 @@ HarmonyTV.prototype = {
           console.log("HarmonyTV: State is currently: " + powerOn);
           that.tvService.getCharacteristic(Characteristic.Active).updateValue(powerOn);
         });
-      }
     }
   },
 
