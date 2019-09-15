@@ -222,7 +222,8 @@ HarmonyTV.prototype = {
           console.log("HarmonyTV: State is currently Off");
           this.tvService.getCharacteristic(Characteristic.Active).updateValue(false);
         }
-      });
+      }
+    });
   },
 
   setPowerState: function(callback)
