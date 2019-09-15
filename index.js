@@ -64,6 +64,10 @@ HarmonyTV.prototype = {
       .on('get', this.getCurrentState.bind(this))
       .on('set', this.setPowerState.bind(this));
 
+    this.tvService
+      .getCharacteristic(Characteristic.ActiveIdentifier)
+      .on('set', this.setInputSource.bind(this))
+
     this.enabledServices.push(this.tvService);
   },
 
@@ -77,13 +81,6 @@ HarmonyTV.prototype = {
       .setCharacteristic(Characteristic.IsConfigured, Characteristic.IsConfigured.CONFIGURED)
       .setCharacteristic(Characteristic.InputSourceType, Characteristic.InputSourceType.APPLICATION)
       .setCharacteristic(Characteristic.CurrentVisibilityState, Characteristic.CurrentVisibilityState.SHOWN);
-
-      tmpInput
-        .getCharacteristic(Characteristic.ConfiguredName)
-        .on('set', (inputLabel, callback) => {
-          console.log("HarmonyTV: Set input to " + inputLabel);
-          callback();
-        });
 
     this.tvService.addLinkedService(tmpInput);
     this.enabledServices.push(tmpInput);
@@ -120,10 +117,9 @@ HarmonyTV.prototype = {
     }
   },
 
-  setInput: function(inputID, inputLabel, callback)
+  setInputSource: function(indentifier, callback)
   {
-    console.log("HarmonyTV: Set input to " + inputLabel);
-    this.tvService.getCharacteristic(Characteristic.ActiveIdentifier).updateValue(inputID);
+    console.log("HarmonyTV: Set input to " + Identifier);
     callback();
   },
 
