@@ -122,11 +122,15 @@ HarmonyTV.prototype = {
     console.log("HarmonyTV: Change input to " + identifier);
     var URL = "http://192.168.1.117:8282/harmonyhub/hubs/hub-woonkamer/activities/tv-kijken/command"
 
-    this.httpPostRequest(URL, "on", function(error, response, statusBody)
+    this.httpPostRequest(URL, "on", function(error, response, responseBody)
     {
       if (error)
       {
         console.log("HarmonyTV start activity function failed: %s", error.message);
+      }
+      else
+      {
+          console.log("RESPONSE: " + responseBody);
       }
     });
     callback();
@@ -208,6 +212,9 @@ HarmonyTV.prototype = {
   httpPostRequest: function(url, body, callback)
   {
     var callbackMethod = callback;
+
+    console.log("URL: " + url);
+    console.log("BODY: " + body)
 
     request.post({
         url: url,
