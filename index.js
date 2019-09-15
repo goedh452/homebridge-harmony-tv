@@ -47,7 +47,7 @@ HarmonyTV.prototype = {
       .setCharacteristic(Characteristic.Model, this.model)
       .setCharacteristic(Characteristic.SerialNumber, this.serial);
 
-    this.enabledServices.pust(informationService);
+    this.enabledServices.pust(this.informationService);
 
   },
 
@@ -64,7 +64,7 @@ HarmonyTV.prototype = {
       .on('get', this.getCurrentState.bind(this))
       .on('set', this.setPowerState.bind(this));
 
-    this.enabledServices.pust(tvService);
+    this.enabledServices.pust(this.tvService);
   },
 
   initHubInfo: function()
