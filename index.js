@@ -78,6 +78,13 @@ HarmonyTV.prototype = {
       .setCharacteristic(Characteristic.InputSourceType, Characteristic.InputSourceType.APPLICATION)
       .setCharacteristic(Characteristic.CurrentVisibilityState, Characteristic.CurrentVisibilityState.SHOWN);
 
+      tmpInput
+        .getCharacteristic(Characteristic.ConfiguredName)
+        .on('set', (inputLabel, callback) => {
+          console.log("HarmonyTV: Set input to " + inputLabel);
+          callback();
+        });
+
     this.tvService.addLinkedService(tmpInput);
     this.enabledServices.push(tmpInput);
   },
