@@ -67,15 +67,15 @@ HarmonyTV.prototype = {
     this.enabledServices.push(this.tvService);
   },
 
-  addInputServices: function(name)
+  addInputServices: function(inputID, inputLabel)
   {
     console.log("Adding input service: " + name);
 
-    let tmpInput = new Service.InputSource(name, name);
+    let tmpInput = new Service.InputSource(inputID, inputID);
 
     tmpInput
-      .setCharacteristic(Characteristic.Identifier, name)
-      .setCharacteristic(Characteristic.ConfiguredName, name)
+      .setCharacteristic(Characteristic.Identifier, inputID)
+      .setCharacteristic(Characteristic.ConfiguredName, inputLabel)
       .setCharacteristic(Characteristic.IsConfigured, Characteristic.IsConfigured.CONFIGURED)
       .setCharacteristic(Characteristic.InputSourceType, Characteristic.InputSourceType.APPLICATION)
       .setCharacteristic(Characteristic.CurrentVisibilityState, Characteristic.CurrentVisibilityState.SHOWN);
@@ -98,6 +98,8 @@ HarmonyTV.prototype = {
     var activitiesURL = this.baseURL + "/" + this.harmonyHubs + "/activities";
     var actResponse = syncrequest("GET", activitiesURL, { timeout: this.timeout });
     var jsonAct = JSON.parse(actResponse.getBody('utf8'));
+    var inputID;
+    var inputLabel;
 
     for (var key = 0; key < jsonAct.activities.length; key++)
     {
@@ -106,7 +108,9 @@ HarmonyTV.prototype = {
       else
       {
         console.log("HarmonyTV: Activity found: " + jsonAct.activities[key].slug);
-        this.addInputServices(jsonAct.activities[key].slug);
+        inputID    = jsonAct.activities[key].slug;
+        inputLabel = jsonAct.activities[key].label;
+        this.addInputServices(inputID, inputLabel);
       }
     }
 
