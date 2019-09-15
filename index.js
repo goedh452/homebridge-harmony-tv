@@ -152,7 +152,7 @@ HarmonyTV.prototype = {
             powerOn = true;
             currentActivityId    = jsonStatus.current_activity.id;
             currentActivityLabel = jsonStatus.current_activity.label;
-            consol.log("HarmonyTV: Current activity is " + currentActivityLabel);
+            console.log("HarmonyTV: Current activity is " + currentActivityLabel);
           }
           else
           {
