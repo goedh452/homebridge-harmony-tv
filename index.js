@@ -188,7 +188,42 @@ HarmonyTV.prototype = {
 
   getCurrentState: function(callback)
   {
+    var statusURL = this.baseURL + "/" + this.harmonyHubs + "/status";
+    this.httpRequest(statusURL, "", "GET", function(error, response, body)
+    {
+      if (error)
+      {
+        console.log("HarmonyTV get status function failed: %s", error.message);
+          try
+          { done(new Error("Network failure")); }
+          catch (err)
+          { console.log(err.message); }
+        }
+        else
+        { done(null, body); }
+      });
 
+      var powerOn;
+      var currentActivityId;
+      var currentActivityLabel;
+      var jsonStatus = JSON.parse(statusBody);
+      var harmonyStatusOff = jsonStatus.off;
+
+      if ( harmonyStatusOff === false  )
+      {
+        powerOn = true;
+        currentActivityId    = jsonStatus.current_activity.id;
+        currentActivityLabel = jsonStatus.current_activity.label;
+        console.log("HarmonyTV: Current activity is " + currentActivityLabel);
+        this.tvService.getCharacteristic(Characteristic.Active).updateValue(true);
+        this.tvService.getCharacteristic(Characteristic.ActiveIdentifier).updateValue(currentActivityId);
+      }
+      else
+      {
+        powerOn = false;
+        console.log("HarmonyTV: State is currently Off");
+        this.tvService.getCharacteristic(Characteristic.Active).updateValue(false);
+      }
   },
 
   setPowerState: function(callback)
