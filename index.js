@@ -110,7 +110,7 @@ HarmonyTV.prototype = {
       else
       {
         console.log("HarmonyTV: Activity found: " + jsonAct.activities[key].label);
-        inputID    = jsonAct.activities[key].id;
+        inputID    = jsonAct.activities[key].slug;
         inputLabel = jsonAct.activities[key].label;
         this.addInputServices(inputID, inputLabel);
       }
@@ -120,7 +120,7 @@ HarmonyTV.prototype = {
   setActiveIdentifier: function(identifier, callback)
   {
     console.log("HarmonyTV: Change input to " + identifier);
-    var inputURL = this.baseURL + "/" + this.harmonyHubs + "/activities/" + "tv-kijken";
+    var inputURL = this.baseURL + "/" + this.harmonyHubs + "/activities/" + identifier;
     console.log("inputURL: " + inputURL);
 
     this.httpPostRequest(inputURL, "on", function(error, response, responseBody)
