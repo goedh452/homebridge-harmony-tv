@@ -69,7 +69,7 @@ HarmonyTV.prototype = {
 
   addInputServices: function(inputID, inputLabel)
   {
-    let tmpInput = new Service.InputSource(inputID, inputID);
+    let tmpInput = new Service.InputSource(inputID, inputLabel);
 
     tmpInput
       .setCharacteristic(Characteristic.Identifier, inputID)
@@ -105,8 +105,8 @@ HarmonyTV.prototype = {
       { console.log("HarmonyTV: Activity found: poweroff -> do not add as input"); }
       else
       {
-        console.log("HarmonyTV: Activity found: " + jsonAct.activities[key].slug);
-        inputID    = jsonAct.activities[key].slug;
+        console.log("HarmonyTV: Activity found: " + jsonAct.activities[key].label;
+        inputID    = jsonAct.activities[key].id;
         inputLabel = jsonAct.activities[key].label;
         this.addInputServices(inputID, inputLabel);
       }
