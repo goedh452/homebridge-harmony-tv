@@ -95,7 +95,7 @@ HarmonyTV.prototype = {
     var hubResponse = syncrequest("GET", this.baseURL, { timeout: this.timeout });
     var jsonHub = JSON.parse(hubResponse.getBody('utf8'));
     this.harmonyHubs = jsonHub.hubs[0];
-    .log("HarmonyTV: HUB found: " + this.harmonyHubs);
+    this.log("HarmonyTV: HUB found: " + this.harmonyHubs);
 
     // Get activities
     var activitiesURL = this.baseURL + "/" + this.harmonyHubs + "/activities";
