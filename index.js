@@ -109,7 +109,7 @@ HarmonyTV.prototype = {
       { console.log("HarmonyTV: Activity found: poweroff -> do not add as input"); }
       else
       {
-        inputID    = jsonAct.activities[key].id;
+        inputID    = jsonAct.activities[key].slug;
         inputLabel = jsonAct.activities[key].label;
         console.log("HarmonyTV: Activity found: " + inputID + " / " + inputLabel);
         this.addInputServices(inputID, inputLabel);
@@ -166,7 +166,7 @@ HarmonyTV.prototype = {
 
           if ( harmonyStatusOff === false  )
           {
-            currentActivityId    = jsonStatus.current_activity.id;
+            currentActivityId    = jsonStatus.current_activity.slug;
             currentActivityLabel = jsonStatus.current_activity.label;
             console.log("HarmonyTV: Current activity is " + currentActivityId + " / " + currentActivityLabel);
             that.tvService.getCharacteristic(Characteristic.Active).updateValue(true);
