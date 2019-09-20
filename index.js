@@ -106,7 +106,9 @@ HarmonyTV.prototype = {
     for (var key = 0; key < jsonAct.activities.length; key++)
     {
       if ( jsonAct.activities[key].id == "-1" )
-      //{ console.log("HarmonyTV: Activity found: poweroff -> do not add as input"); }
+      {
+        //console.log("HarmonyTV: Activity found: poweroff -> do not add as input");
+      }
       else
       {
         inputID    = jsonAct.activities[key].id;
