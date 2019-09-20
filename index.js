@@ -128,10 +128,9 @@ HarmonyTV.prototype = {
   setActiveIdentifier: function(identifier, callback)
   {
     var slug = this.inputServices.find(x => x.id == identifier).slug;
-    console.log("HarmonyTV: Change input to " + slug);
+    this.log("HarmonyTV: Change activity to " + slug);
 
     var inputURL = this.baseURL + "/" + this.harmonyHubs + "/activities/" + slug;
-    console.log("inputURL: " + inputURL);
 
     this.httpPostRequest(inputURL, "on", function(error, response, responseBody)
     {
