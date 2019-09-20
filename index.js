@@ -106,12 +106,12 @@ HarmonyTV.prototype = {
     for (var key = 0; key < jsonAct.activities.length; key++)
     {
       if ( jsonAct.activities[key].id == "-1" )
-      { console.log("HarmonyTV: Activity found: poweroff -> do not add as input"); }
+      //{ console.log("HarmonyTV: Activity found: poweroff -> do not add as input"); }
       else
       {
         inputID    = jsonAct.activities[key].id;
         inputLabel = jsonAct.activities[key].label;
-        console.log("HarmonyTV: Activity found: " + inputID + " / " + inputLabel);
+        console.log("HarmonyTV: Activity found: " + inputLabel);
         this.addInputServices(inputID, inputLabel);
       }
     }
@@ -168,7 +168,7 @@ HarmonyTV.prototype = {
           {
             currentActivityId    = jsonStatus.current_activity.id;
             currentActivityLabel = jsonStatus.current_activity.label;
-            console.log("HarmonyTV: Current activity is " + currentActivityId + " / " + currentActivityLabel);
+            //console.log("HarmonyTV: Current activity is " + currentActivityId + " / " + currentActivityLabel);
             that.tvService.getCharacteristic(Characteristic.Active).updateValue(true);
             that.tvService.getCharacteristic(Characteristic.ActiveIdentifier).updateValue(currentActivityId);
           }
