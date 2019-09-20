@@ -166,7 +166,7 @@ HarmonyTV.prototype = {
 
           if ( harmonyStatusOff === false  )
           {
-            currentActivityId    = jsonStatus.current_activity.id;
+            currentActivityId    = jsonStatus.current_activity.slug;
             currentActivityLabel = jsonStatus.current_activity.label;
             //console.log("HarmonyTV: Current activity is " + currentActivityLabel);
             that.tvService.getCharacteristic(Characteristic.Active).updateValue(true);
