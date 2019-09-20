@@ -126,13 +126,7 @@ HarmonyTV.prototype = {
     this.httpPostRequest(inputURL, "on", function(error, response, responseBody)
     {
       if (error)
-      {
-        console.log("HarmonyTV start activity function failed: %s", error.message);
-      }
-      else
-      {
-        //console.log("RESPONSE: " + responseBody);
-      }
+      { console.log("HarmonyTV start activity function failed: %s", error.message); }
     });
     callback();
   },
