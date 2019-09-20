@@ -117,10 +117,7 @@ HarmonyTV.prototype = {
         inputSlug  = jsonAct.activities[key].slug;
         inputLabel = jsonAct.activities[key].label;
         console.log("HarmonyTV: Activity found: " + inputLabel);
-        this.inputServices.push({inputSlug, inputID});
-
-        console.log("inputServices: " + this.inputServices);
-
+        this.inputServices.push({"id: " + inputID, "slug: " + inputSlug});
         this.addInputServices(inputID, inputLabel);
       }
     }
@@ -129,6 +126,10 @@ HarmonyTV.prototype = {
   setActiveIdentifier: function(identifier, callback)
   {
     console.log("HarmonyTV: Change input to " + identifier);
+
+    var slug = this.inputServices.find(x => x.id === identifier).slug;
+    console.log("SLUG: " + slug);
+
     var inputURL = this.baseURL + "/" + this.harmonyHubs + "/activities/" + identifier;
     console.log("inputURL: " + inputURL);
 
