@@ -95,7 +95,7 @@ HarmonyTV.prototype = {
     var hubResponse = syncrequest("GET", this.baseURL, { timeout: this.timeout });
     var jsonHub = JSON.parse(hubResponse.getBody('utf8'));
     this.harmonyHubs = jsonHub.hubs[0];
-    this.log("HarmonyTV: HUB found: " + this.harmonyHubs);
+    this.log("HUB found: " + this.harmonyHubs);
 
     // Get activities
     var activitiesURL = this.baseURL + "/" + this.harmonyHubs + "/activities";
@@ -109,7 +109,7 @@ HarmonyTV.prototype = {
     {
       if ( jsonAct.activities[key].id == "-1" )  // Poweroff
       {
-        //this.log("HarmonyTV: Activity found: poweroff -> do not add as input");
+        //this.log("Activity found: poweroff -> do not add as input");
       }
       else
       {
@@ -117,7 +117,7 @@ HarmonyTV.prototype = {
         inputSlug  = jsonAct.activities[key].slug;
         inputLabel = jsonAct.activities[key].label;
 
-        this.log("HarmonyTV: Activity found: " + inputLabel);
+        this.log("Activity found: " + inputLabel);
         this.inputServices.push({id : inputID, slug : inputSlug});
         this.addInputServices(inputID, inputLabel);
       }
@@ -129,7 +129,7 @@ HarmonyTV.prototype = {
     var slug = this.inputServices.find(x => x.id == identifier).slug;
     var inputURL = this.baseURL + "/" + this.harmonyHubs + "/activities/" + slug;
 
-    this.log("HarmonyTV: Change activity to " + slug);
+    this.log("Change activity to " + slug);
 
     this.httpPostRequest(inputURL, "on", function(error, response, responseBody)
     {
@@ -176,13 +176,13 @@ HarmonyTV.prototype = {
           {
             currentActivityId    = jsonStatus.current_activity.id;
             currentActivityLabel = jsonStatus.current_activity.label;
-            //this.log("HarmonyTV: Current activity is " + currentActivityId + " / " + currentActivityLabel);
+            //this.log("Current activity is " + currentActivityId + " / " + currentActivityLabel);
             that.tvService.getCharacteristic(Characteristic.Active).updateValue(true);
             that.tvService.getCharacteristic(Characteristic.ActiveIdentifier).updateValue(currentActivityId);
           }
           else
           {
-            //this.log("HarmonyTV: State is currently Off");
+            //this.log("State is currently Off");
             that.tvService.getCharacteristic(Characteristic.Active).updateValue(false);
           }
         });
@@ -255,9 +255,9 @@ HarmonyTV.prototype = {
     }.bind(this));
   },
 
-  setPowerState: function(callback)
+  setPowerState: function(powerOn, callback)
   {
-
+    this.log("powerOn: " + powerOn);
   },
 
   getServices: function()
