@@ -131,6 +131,14 @@ HarmonyTV.prototype = {
   setActiveIdentifier: function(identifier, callback)
   {
     console.log("HarmonyTV: Change input to " + identifier);
+
+    for (var k = 0; key < this.inputServices.length; k++)
+    {
+      console.log("ID: " + this.inputServices[k].id);
+      console.log("SL: " + this.inputServices[k].slug);
+    }
+
+
     var slug = this.inputServices.find(x => x.id == identifier).slug;
     console.log("SLUG: " + slug);
 
