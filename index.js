@@ -26,6 +26,7 @@ function HarmonyTV(log, config)
 
   // Variables
   this.enabledServices = [];
+  this.inputServices = [];
   this.baseURL = "http://" + this.apiIP + ":" + this.apiPort + "/hubs";
   this.harmonyHubs;
 
@@ -101,19 +102,25 @@ HarmonyTV.prototype = {
     var actResponse = syncrequest("GET", activitiesURL, { timeout: this.timeout });
     var jsonAct = JSON.parse(actResponse.getBody('utf8'));
     var inputID;
+    var inputSlug;
     var inputLabel;
 
     for (var key = 0; key < jsonAct.activities.length; key++)
     {
-      if ( jsonAct.activities[key].id == "-1" )
+      if ( jsonAct.activities[key].id == "-1" )  // Poweroff
       {
         //console.log("HarmonyTV: Activity found: poweroff -> do not add as input");
       }
       else
       {
         inputID    = jsonAct.activities[key].id;
+        inputSlug  = jsonAct.activities[key].slug;
         inputLabel = jsonAct.activities[key].label;
         console.log("HarmonyTV: Activity found: " + inputLabel);
+        this.inputServices.push({inputSlug, inputID});
+
+        consol.log("inputServices: " + this.inputServices);
+
         this.addInputServices(inputID, inputLabel);
       }
     }
