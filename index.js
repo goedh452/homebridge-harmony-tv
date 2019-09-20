@@ -104,6 +104,7 @@ HarmonyTV.prototype = {
     var inputID;
     var inputSlug;
     var inputLabel;
+    var inputService = new Object();
 
     for (var key = 0; key < jsonAct.activities.length; key++)
     {
@@ -116,8 +117,12 @@ HarmonyTV.prototype = {
         inputID    = jsonAct.activities[key].id;
         inputSlug  = jsonAct.activities[key].slug;
         inputLabel = jsonAct.activities[key].label;
+
+        inputService.id   = inputID;
+        inputService.slug = inputSlug;
+
         console.log("HarmonyTV: Activity found: " + inputLabel);
-        this.inputServices.push({ id : inputID, slug : inputSlug});
+        this.inputServices.push(inputService);
         this.addInputServices(inputID, inputLabel);
       }
     }
