@@ -119,7 +119,7 @@ HarmonyTV.prototype = {
         console.log("HarmonyTV: Activity found: " + inputLabel);
         this.inputServices.push({inputSlug, inputID});
 
-        consol.log("inputServices: " + this.inputServices);
+        console.log("inputServices: " + this.inputServices);
 
         this.addInputServices(inputID, inputLabel);
       }
