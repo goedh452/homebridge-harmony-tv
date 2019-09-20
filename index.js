@@ -132,7 +132,7 @@ HarmonyTV.prototype = {
   {
     console.log("HarmonyTV: Change input to " + identifier);
 
-    for (var k = 0; key < this.inputServices.length; k++)
+    for (var k = 0; k < this.inputServices.length; k++)
     {
       console.log("ID: " + this.inputServices[k].id);
       console.log("SL: " + this.inputServices[k].slug);
