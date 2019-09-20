@@ -257,7 +257,19 @@ HarmonyTV.prototype = {
 
   setPowerState: function(powerOn, callback)
   {
-    this.log("powerOn: " + powerOn);
+    var body;
+    var inputURL = this.baseURL + "/" + this.harmonyHubs + "/activities/" + "tv-kijken";
+
+    if ( powerOn == 0 ) { body = "off"; } else { body = "on"; }
+
+    this.log("Set activity " + body);
+
+    this.httpPostRequest(inputURL, body, function(error, response, responseBody)
+    {
+      if (error)
+      { this.log("HarmonyTV start activity function failed: %s", error.message); }
+    });
+    callback();
   },
 
   getServices: function()
