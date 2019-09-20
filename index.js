@@ -95,7 +95,7 @@ HarmonyTV.prototype = {
     var hubResponse = syncrequest("GET", this.baseURL, { timeout: this.timeout });
     var jsonHub = JSON.parse(hubResponse.getBody('utf8'));
     this.harmonyHubs = jsonHub.hubs[0];
-    console.log("HarmonyTV: HUB found: " + this.harmonyHubs);
+    .log("HarmonyTV: HUB found: " + this.harmonyHubs);
 
     // Get activities
     var activitiesURL = this.baseURL + "/" + this.harmonyHubs + "/activities";
@@ -104,13 +104,12 @@ HarmonyTV.prototype = {
     var inputID;
     var inputSlug;
     var inputLabel;
-    var inputService = new Object();
 
     for (var key = 0; key < jsonAct.activities.length; key++)
     {
       if ( jsonAct.activities[key].id == "-1" )  // Poweroff
       {
-        //console.log("HarmonyTV: Activity found: poweroff -> do not add as input");
+        //this.log("HarmonyTV: Activity found: poweroff -> do not add as input");
       }
       else
       {
@@ -118,7 +117,7 @@ HarmonyTV.prototype = {
         inputSlug  = jsonAct.activities[key].slug;
         inputLabel = jsonAct.activities[key].label;
 
-        console.log("HarmonyTV: Activity found: " + inputLabel);
+        this.log("HarmonyTV: Activity found: " + inputLabel);
         this.inputServices.push({id : inputID, slug : inputSlug});
         this.addInputServices(inputID, inputLabel);
       }
@@ -128,14 +127,14 @@ HarmonyTV.prototype = {
   setActiveIdentifier: function(identifier, callback)
   {
     var slug = this.inputServices.find(x => x.id == identifier).slug;
-    this.log("HarmonyTV: Change activity to " + slug);
-
     var inputURL = this.baseURL + "/" + this.harmonyHubs + "/activities/" + slug;
+
+    this.log("HarmonyTV: Change activity to " + slug);
 
     this.httpPostRequest(inputURL, "on", function(error, response, responseBody)
     {
       if (error)
-      { console.log("HarmonyTV start activity function failed: %s", error.message); }
+      { this.log("HarmonyTV start activity function failed: %s", error.message); }
     });
     callback();
   },
@@ -152,11 +151,11 @@ HarmonyTV.prototype = {
         {
           if (error)
           {
-            console.log("HarmonyTV get status function failed: %s", error.message);
+            this.log("HarmonyTV get status function failed: %s", error.message);
               try
               { done(new Error("Network failure")); }
               catch (err)
-              { console.log(err.message); }
+              { this.log(err.message); }
             }
             else
             { done(null, body); }
@@ -177,13 +176,13 @@ HarmonyTV.prototype = {
           {
             currentActivityId    = jsonStatus.current_activity.id;
             currentActivityLabel = jsonStatus.current_activity.label;
-            //console.log("HarmonyTV: Current activity is " + currentActivityId + " / " + currentActivityLabel);
+            //this.log("HarmonyTV: Current activity is " + currentActivityId + " / " + currentActivityLabel);
             that.tvService.getCharacteristic(Characteristic.Active).updateValue(true);
             that.tvService.getCharacteristic(Characteristic.ActiveIdentifier).updateValue(currentActivityId);
           }
           else
           {
-            //console.log("HarmonyTV: State is currently Off");
+            //this.log("HarmonyTV: State is currently Off");
             that.tvService.getCharacteristic(Characteristic.Active).updateValue(false);
           }
         });
@@ -236,7 +235,7 @@ HarmonyTV.prototype = {
     {
       if (error)
       {
-        console.log("HarmonyTV get status function failed: %s", error.message);
+        this.log("HarmonyTV get status function failed: %s", error.message);
       }
       else
       {
