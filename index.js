@@ -258,7 +258,7 @@ HarmonyTV.prototype = {
   setPowerState: function(powerOn, callback)
   {
     var body;
-    var inputURL = this.baseURL + "/" + this.harmonyHubs + "/activities/" + "tv-kijken";
+    var inputURL = this.baseURL + "/" + this.harmonyHubs + "/activities/" + "tv-kijken/command";
 
     if ( powerOn == 0 ) { body = "off"; } else { body = "on"; }
 
