@@ -131,7 +131,7 @@ HarmonyTV.prototype = {
 
     this.log("Change activity to " + slug);
 
-    this.httpPostRequest(inputURL, "", function(error, response, responseBody)
+    this.httpRequest(inputURL, "", "POST", function(error, response, responseBody)
     {
       if (error)
       { this.log("HarmonyTV start activity function failed: %s", error.message); }
