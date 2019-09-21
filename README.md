@@ -25,10 +25,27 @@ For this plugin to work, enable XMPP for the Harmony hub and install the Harmony
 * Enable XMPP
 * Confirm twice
 
-### Install Harmony API
+### Install Harmony API (with great thanks to maddox)
 ```sh
 cd $HOME
 git clone https://github.com/maddox/harmony-api.git
+cd harmony-api
+script/bootstrap
+sudo mkdir -p /var/lib/harmony-api
+sudo cp -R * /var/lib/harmony-api
+sudo ln -sf /var/lib/harmony-api/config /etc/harmony-api
+sudo cp /var/lib/harmony-api/config/harmony-api-server.service /etc/systemd/system/
+sudo systemctl enable harmony-api-server.service
+```
+
+Then either reboot or run
+```sh
+sudo systemctl start harmony-api-server.service
+```
+
+Server log is checked with
+```sh
+sudo journalctl -f -u harmony-api-server
 ```
 
 ### Install homebridge-harmony-tv:
