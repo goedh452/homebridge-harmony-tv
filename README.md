@@ -27,9 +27,9 @@ For this plugin to work, enable XMPP for the Harmony hub and install the Harmony
 
 ### Install Harmony API
 
-See https://github.com/maddox/harmony-api for installation instructions.
-
-* ```sh cd $HOME ```
+* ```sh
+cd $HOME
+```
 
 
 ### Install homebridge-harmony-tv:
