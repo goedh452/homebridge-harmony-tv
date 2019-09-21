@@ -155,7 +155,7 @@ HarmonyTV.prototype = {
               try
               { done(new Error("Network failure")); }
               catch (err)
-              { this.log(err.message); }
+              { console.log(err.message); }
             }
             else
             { done(null, body); }
