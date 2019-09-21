@@ -19,14 +19,14 @@ function HarmonyTV(log, config)
   this.connection       = config.connection                     || "http";
 
   // HTTP connection settings
-  this.apiIP            = config.httpSettings.ApiIP;
-  this.apiPort          = config.httpSettings.ApiPort           || 8282;
+  this.apiIP            = config.httpSettings.apiIP;
+  this.apiPort          = config.httpSettings.apiPort           || 8282;
   this.pollingInterval  = config.httpSettings.pollingInterval   || 5000;
   this.timeout          = config.httpSettings.timeout           || 5000;
 
   // MQTT connection settings
-  this.mqttServer       = config.mqttSettings.server;
-  this.mqttPort         = config.mqttSettings.port;
+  this.mqttServer       = config.mqttSettings.server            || ".";
+  this.mqttPort         = config.mqttSettings.port              || 0;
 
   this.manufacturer     = config.manufacturer                   || "goedh452";
   this.model            = config.model                          || "Harmony TV";
