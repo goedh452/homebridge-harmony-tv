@@ -131,7 +131,7 @@ HarmonyTV.prototype = {
 
     this.log("Change activity to " + slug);
 
-    this.httpPostRequest(inputURL, "on", function(error, response, responseBody)
+    this.httpPostRequest(inputURL, "", function(error, response, responseBody)
     {
       if (error)
       { this.log("HarmonyTV start activity function failed: %s", error.message); }
@@ -151,7 +151,7 @@ HarmonyTV.prototype = {
         {
           if (error)
           {
-            this.log("HarmonyTV get status function failed: %s", error.message);
+            console.log("HarmonyTV get status function failed: %s", error.message);
               try
               { done(new Error("Network failure")); }
               catch (err)
@@ -257,14 +257,20 @@ HarmonyTV.prototype = {
 
   setPowerState: function(powerOn, callback)
   {
-    var body;
-    var inputURL = this.baseURL + "/" + this.harmonyHubs + "/activities/" + "tv-kijken/command";
+    var inputURL;
 
-    if ( powerOn == 0 ) { body = "off"; } else { body = "on"; }
+    if ( powerOn == 0 )
+    {
+      this.log("Set activity off");
+      inputURL = this.baseURL + "/" + this.harmonyHubs + "/off";
+    }
+    else
+    {
+      this.log("Set activity on");
+      inputURL = this.baseURL + "/" + this.harmonyHubs + "/activities/" + "tv-kijken";
+    }
 
-    this.log("Set activity " + body);
-
-    this.httpPostRequest(inputURL, body, function(error, response, responseBody)
+    this.httpPostRequest(inputURL, "", function(error, response, responseBody)
     {
       if (error)
       { this.log("HarmonyTV start activity function failed: %s", error.message); }
