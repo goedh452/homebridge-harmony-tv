@@ -47,6 +47,7 @@ HarmonyTV.prototype = {
       .setCharacteristic(Characteristic.Manufacturer, this.manufacturer)
       .setCharacteristic(Characteristic.Model, this.model)
       .setCharacteristic(Characteristic.SerialNumber, this.serial);
+      .setCharacteristic(Characteristic.FirmwareRevision, '0.0.1');
 
     this.enabledServices.push(this.informationService);
 
@@ -161,7 +162,7 @@ HarmonyTV.prototype = {
           {
             console.log("HarmonyTV get status function failed: %s", error.message);
               try
-              { done(new Error("Is harmony API running and are settings in config file correct?")); }
+              { done(new Error("ERROR HARMONYTV: Is harmony API running and are settings in config file correct?")); }
               catch (err)
               { console.log(err.message); }
             }
