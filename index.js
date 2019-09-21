@@ -12,17 +12,24 @@ module.exports = function(homebridge) {
 
 function HarmonyTV(log, config)
 {
-  this.log = log;
+  this.log        = log;
+  this.apiIP      = "";
+  this.apiPort    = 0;
+  this.mqttServer = "";
+  this.mqttPort   = 0;
 
   // Config file
   this.name             = config.name                           || "Harmony TV";
   this.connection       = config.connection                     || "http";
 
   // HTTP connection settings
-  this.apiIP            = config.httpSettings.apiIP;
-  this.apiPort          = config.httpSettings.apiPort           || 8282;
-  this.pollingInterval  = config.httpSettings.pollingInterval   || 5000;
-  this.timeout          = config.httpSettings.timeout           || 5000;
+  if ( config.httpSettings !== undefined )
+  {
+    this.apiIP            = config.httpSettings.apiIP;
+    this.apiPort          = config.httpSettings.apiPort           || 8282;
+    this.pollingInterval  = config.httpSettings.pollingInterval   || 5000;
+    this.timeout          = config.httpSettings.timeout           || 5000;
+  }
 
   // MQTT connection settings
   if ( config.mqttSettings !== undefined )
@@ -36,10 +43,11 @@ function HarmonyTV(log, config)
   this.serial           = config.serial                         || "Harmony TV";
 
   // Variables
-  this.enabledServices = [];
-  this.inputServices = [];
-  this.baseURL = "http://" + this.apiIP + ":" + this.apiPort + "/hubs";
-  this.harmonyHubs;
+  this.enabledServices  = [];
+  this.inputServices    = [];
+  this.baseURL          = "http://" + this.apiIP + ":" + this.apiPort + "/hubs";
+  this.lastActivity     = "";
+  this.harmonyHubs      = "";
 
   // Initialize service
   this.initInformationService();
@@ -148,6 +156,7 @@ HarmonyTV.prototype = {
   {
     var slug = this.inputServices.find(x => x.id == identifier).slug;
     var inputURL = this.baseURL + "/" + this.harmonyHubs + "/activities/" + slug;
+    this.lastActivity = slug;
 
     this.log("Change activity to " + slug);
 
@@ -270,7 +279,11 @@ HarmonyTV.prototype = {
     else
     {
       this.log("Set activity on");
-      inputURL = this.baseURL + "/" + this.harmonyHubs + "/activities/" + "tv-kijken";
+
+      if ( this.lastActivity == "" )
+      { this.lastActivity = this.inputServices[0].slug; }
+
+      inputURL = this.baseURL + "/" + this.harmonyHubs + "/activities/" + this.lastActivity;
       method = "POST";
     }
 
