@@ -92,36 +92,44 @@ HarmonyTV.prototype = {
     // Get Hubs
     this.baseURL = "http://" + this.apiIP + ":" + this.apiPort + "/hubs";
 
-    var hubResponse = syncrequest("GET", this.baseURL, { timeout: this.timeout });
-    var jsonHub = JSON.parse(hubResponse.getBody('utf8'));
-    this.harmonyHubs = jsonHub.hubs[0];
-    this.log("HUB found: " + this.harmonyHubs);
+    try
+    {
+      var hubResponse = syncrequest("GET", this.baseURL, { timeout: this.timeout });
+      var jsonHub = JSON.parse(hubResponse.getBody('utf8'));
+      this.harmonyHubs = jsonHub.hubs[0];
+      this.log("HUB found: " + this.harmonyHubs);
+    }
+    catch (err) { this.log(err.message); }
 
     // Get activities
-    var activitiesURL = this.baseURL + "/" + this.harmonyHubs + "/activities";
-    var actResponse = syncrequest("GET", activitiesURL, { timeout: this.timeout });
-    var jsonAct = JSON.parse(actResponse.getBody('utf8'));
-    var inputID;
-    var inputSlug;
-    var inputLabel;
-
-    for (var key = 0; key < jsonAct.activities.length; key++)
+    try
     {
-      if ( jsonAct.activities[key].id == "-1" )  // Poweroff
-      {
-        //this.log("Activity found: poweroff -> do not add as input");
-      }
-      else
-      {
-        inputID    = jsonAct.activities[key].id;
-        inputSlug  = jsonAct.activities[key].slug;
-        inputLabel = jsonAct.activities[key].label;
+      var activitiesURL = this.baseURL + "/" + this.harmonyHubs + "/activities";
+      var actResponse = syncrequest("GET", activitiesURL, { timeout: this.timeout });
+      var jsonAct = JSON.parse(actResponse.getBody('utf8'));
+      var inputID;
+      var inputSlug;
+      var inputLabel;
 
-        this.log("Activity found: " + inputLabel);
-        this.inputServices.push({id : inputID, slug : inputSlug});
-        this.addInputServices(inputID, inputLabel);
+      for (var key = 0; key < jsonAct.activities.length; key++)
+      {
+        if ( jsonAct.activities[key].id == "-1" )  // Poweroff
+        {
+          //this.log("Activity found: poweroff -> do not add as input");
+        }
+        else
+        {
+          inputID    = jsonAct.activities[key].id;
+          inputSlug  = jsonAct.activities[key].slug;
+          inputLabel = jsonAct.activities[key].label;
+
+          this.log("Activity found: " + inputLabel);
+          this.inputServices.push({id : inputID, slug : inputSlug});
+          this.addInputServices(inputID, inputLabel);
+        }
       }
     }
+    catch (err) { this.log(err.message); }
   },
 
   setActiveIdentifier: function(identifier, callback)
