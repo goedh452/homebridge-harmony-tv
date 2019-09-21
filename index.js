@@ -66,7 +66,7 @@ HarmonyTV.prototype = {
       .setCharacteristic(Characteristic.Manufacturer, this.manufacturer)
       .setCharacteristic(Characteristic.Model, this.model)
       .setCharacteristic(Characteristic.SerialNumber, this.serial)
-      .setCharacteristic(Characteristic.FirmwareRevision, '0.0.1');
+      .setCharacteristic(Characteristic.FirmwareRevision, '0.1.0');
 
     this.enabledServices.push(this.informationService);
 
