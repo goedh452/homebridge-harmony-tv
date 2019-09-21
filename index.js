@@ -161,7 +161,7 @@ HarmonyTV.prototype = {
           {
             console.log("HarmonyTV get status function failed: %s", error.message);
               try
-              { done(new Error("Network failure")); }
+              { done(new Error("Is harmony API running and are settings correct?")); }
               catch (err)
               { console.log(err.message); }
             }
