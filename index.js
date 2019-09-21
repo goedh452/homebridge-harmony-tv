@@ -254,7 +254,7 @@ HarmonyTV.prototype = {
       method = "POST";
     }
 
-    this.httpRequest(inputURL, "", medthod, function(error, response, responseBody)
+    this.httpRequest(inputURL, "", method, function(error, response, responseBody)
     {
       if (error)
       { this.log("HarmonyTV start activity function failed: %s", error.message); }
