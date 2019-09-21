@@ -278,11 +278,10 @@ HarmonyTV.prototype = {
     }
     else
     {
-      this.log("Set activity on");
-
       if ( this.lastActivity == "" )
       { this.lastActivity = this.inputServices[0].slug; }
 
+      this.log("Set activity to " + this.lastActivity);
       inputURL = this.baseURL + "/" + this.harmonyHubs + "/activities/" + this.lastActivity;
       method = "POST";
     }
