@@ -25,8 +25,11 @@ function HarmonyTV(log, config)
   this.timeout          = config.httpSettings.timeout           || 5000;
 
   // MQTT connection settings
-  this.mqttServer       = config.mqttSettings.server            || ".";
-  this.mqttPort         = config.mqttSettings.port              || 0;
+  if ( config.mqttSettings !== undefined )
+  {
+    this.mqttServer       = config.mqttSettings.server            || ".";
+    this.mqttPort         = config.mqttSettings.port              || 0;
+  }
 
   this.manufacturer     = config.manufacturer                   || "goedh452";
   this.model            = config.model                          || "Harmony TV";
