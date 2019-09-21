@@ -209,25 +209,6 @@ HarmonyTV.prototype = {
       });
   },
 
-  httpPostRequest: function(url, body, callback)
-  {
-    var callbackMethod = callback;
-    request.post({
-        url: url,
-        body: body,
-        method: "POST",
-        timeout: this.timeout,
-        rejectUnauthorized: false
-      },
-      function(error, response, responseBody)
-      {
-        if (callbackMethod)
-        {
-          callbackMethod(error, response, responseBody);
-        }
-      });
-  },
-
   getCurrentState: function(callback)
   {
     var statusURL = this.baseURL + "/" + this.harmonyHubs + "/status";
@@ -258,19 +239,22 @@ HarmonyTV.prototype = {
   setPowerState: function(powerOn, callback)
   {
     var inputURL;
+    var method;
 
     if ( powerOn == 0 )
     {
       this.log("Set activity off");
       inputURL = this.baseURL + "/" + this.harmonyHubs + "/off";
+      method = "PUT";
     }
     else
     {
       this.log("Set activity on");
       inputURL = this.baseURL + "/" + this.harmonyHubs + "/activities/" + "tv-kijken";
+      method = "POST";
     }
 
-    this.httpPostRequest(inputURL, "", function(error, response, responseBody)
+    this.httpRequest(inputURL, "", medthod, function(error, response, responseBody)
     {
       if (error)
       { this.log("HarmonyTV start activity function failed: %s", error.message); }
