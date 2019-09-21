@@ -25,6 +25,7 @@ For this plugin to work, enable XMPP for the Harmony hub and install the Harmony
 * Enable XMPP
 * Confirm twice
 
+
 ### Install Harmony API (with great thanks to maddox)
 ```sh
 cd $HOME
@@ -50,6 +51,7 @@ Harmony API server log is checked with
 ```sh
 sudo journalctl -f -u harmony-api-server
 ```
+
 
 ### Install homebridge-harmony-tv:
 ```sh
