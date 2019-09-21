@@ -31,6 +31,9 @@ cd $HOME
 git clone https://github.com/maddox/harmony-api.git
 cd harmony-api
 script/bootstrap
+```
+Install Harmony API as a service
+```sh
 sudo mkdir -p /var/lib/harmony-api
 sudo cp -R * /var/lib/harmony-api
 sudo ln -sf /var/lib/harmony-api/config /etc/harmony-api
@@ -43,7 +46,7 @@ Then either reboot or run
 sudo systemctl start harmony-api-server.service
 ```
 
-Server log is checked with
+Harmony API server log is checked with
 ```sh
 sudo journalctl -f -u harmony-api-server
 ```
