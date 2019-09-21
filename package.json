@@ -1,6 +1,6 @@
 {
   "name": "homebridge-harmony-tv",
-  "version": "1.6.2",
+  "version": "0.1.0",
   "description": "Homebridge plugin for Harmony activities",
   "main": "index.js",
   "engines": {
