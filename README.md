@@ -1,3 +1,6 @@
+# !!! Not maintained anymore !!!
+Since I do not use Homebridge anymore, this module is not maintained. Feel free to fork it and make the changes you need.
+
 # homebridge-harmony-tv
 
 `hombridge-harmony-tv` is a plugin for Homebridge which allows you to control your activities of your Harmony remote. It creates a Homekit television with inputs that represent the activities.
